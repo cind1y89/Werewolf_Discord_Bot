@@ -1,0 +1,25 @@
+{
+  "id": "standard_classic",
+  "name": "標準經典規則",
+  "version": "1.0.0",
+  "settings": {
+    "witch_first_night_self_heal": true,
+    "witch_later_nights_self_heal": true,
+    "guard_can_self_protect": true,
+    "guard_same_target_restriction": true,
+    "guard_and_witch_heal_conflict": true,
+    "hunter_can_shoot_when_poisoned": false,
+    "wolf_king_can_shoot_when_poisoned": false,
+    "white_wolf_king_can_explode_in_vote": false,
+    "thief_must_pick_wolf_if_available": true,
+    "delayed_exile_counts_as_alive_during_night": true,
+    "nightmare_can_fear_wolves_after_first_night": true,
+    "nightmare_fear_notice": false,
+    "sheriff_vote_weight": 1.5,
+    "sheriff_swallow_booms": 0,
+    "crow_extra_votes": 1,
+    "crow_curse_public": false,
+    "jester_win_ends_game": false,
+    "tie_draw_days": 2
+  }
+}

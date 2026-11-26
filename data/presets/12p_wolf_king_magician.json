@@ -1,0 +1,24 @@
+{
+  "id": "12p_wolf_king_magician",
+  "name": "12 人官方局：狼王魔術師",
+  "players": 12,
+  "fill_role": "villager",
+  "roles": [
+    "wolf_king",
+    "seer",
+    "werewolf",
+    "witch",
+    "werewolf",
+    "hunter",
+    "werewolf",
+    "magician",
+    "villager",
+    "villager",
+    "villager",
+    "villager"
+  ],
+  "rules": {
+    "witch_first_night_self_heal": false,
+    "witch_later_nights_self_heal": false
+  }
+}

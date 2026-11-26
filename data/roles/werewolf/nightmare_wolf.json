@@ -1,0 +1,121 @@
+{
+  "id": "nightmare_wolf",
+  "name": "惡靈騎士",
+  "en_name": "Nightmare Wolf",
+  "initial_state": {
+    "faction": "WEREWOLF",
+    "category": "SPECIAL_WOLF",
+    "win_condition": "SLAUGHTER_SIDE",
+    "seer_result": "WEREWOLF"
+  },
+  "tags": [
+    "night_immune",
+    "reflect_damage",
+    "no_suicide"
+  ],
+  "skill_description": "擁有一次反傷技能，且夜晚不會死亡。若夜晚被預言家查驗，次日預言家出局；若夜晚被女巫使用毒藥，次日女巫出局（同一晚若同時被查驗與下毒，則先發動技能者出局）。不可自爆。",
+  "skill_rules": [
+    "夜晚不會死亡（免疫夜間傷害）。",
+    "有一次反傷：夜晚被預言家查驗，次日預言家出局；被女巫下毒，次日女巫出局。同一晚兩者都發生，先行動的那位出局。",
+    "與狼人一起襲擊。不能自爆。"
+  ],
+  "actions": {
+    "night": true,
+    "day": false,
+    "passive": true,
+    "death_trigger": false
+  },
+  "resources": {
+    "reflect_charge": {
+      "initial": 1,
+      "max": 1
+    }
+  },
+  "ability_refs": [
+    "wolf_pack_attack"
+  ],
+  "abilities": [
+    {
+      "id": "night_immortality",
+      "trigger": "PASSIVE",
+      "execution": {
+        "phase": "NIGHT",
+        "priority": 5,
+        "resolution_timing": "BEFORE_DAMAGE",
+        "depends_on": []
+      },
+      "target": {
+        "count": 0,
+        "scope": "SELF",
+        "allow_self": true,
+        "allow_dead": false
+      },
+      "effects": [
+        {
+          "type": "IMMUNE_NIGHT_DEATH"
+        }
+      ],
+      "restrictions": [],
+      "usage_limit": -1
+    },
+    {
+      "id": "reflect_seer_check",
+      "trigger": "ON_BEING_SEER_CHECKED",
+      "resource": "reflect_charge",
+      "execution": {
+        "phase": "NIGHT",
+        "priority": 60,
+        "resolution_timing": "AFTER_DAMAGE",
+        "depends_on": [
+          "seer"
+        ]
+      },
+      "target": {
+        "count": 0,
+        "scope": "SELF",
+        "allow_self": false,
+        "allow_dead": false
+      },
+      "effects": [
+        {
+          "type": "REFLECT_ATTACKER",
+          "attacker_role": "seer",
+          "cause": "NIGHTMARE_REFLECT"
+        }
+      ],
+      "restrictions": [],
+      "usage_limit": 1
+    },
+    {
+      "id": "reflect_witch_poison",
+      "trigger": "ON_BEING_WITCH_POISONED",
+      "resource": "reflect_charge",
+      "execution": {
+        "phase": "NIGHT",
+        "priority": 60,
+        "resolution_timing": "AFTER_DAMAGE",
+        "depends_on": [
+          "witch"
+        ]
+      },
+      "target": {
+        "count": 0,
+        "scope": "SELF",
+        "allow_self": false,
+        "allow_dead": false
+      },
+      "effects": [
+        {
+          "type": "REFLECT_ATTACKER",
+          "attacker_role": "witch",
+          "cause": "NIGHTMARE_REFLECT"
+        }
+      ],
+      "restrictions": [],
+      "usage_limit": 1
+    }
+  ],
+  "death_trigger": null,
+  "dynamic_rules": [],
+  "custom_data": {}
+}

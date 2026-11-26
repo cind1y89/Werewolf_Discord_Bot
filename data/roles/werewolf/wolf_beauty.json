@@ -1,0 +1,95 @@
+{
+  "id": "wolf_beauty",
+  "name": "狼美人",
+  "en_name": "Wolf Beauty",
+  "initial_state": {
+    "faction": "WEREWOLF",
+    "category": "SPECIAL_WOLF",
+    "win_condition": "SLAUGHTER_SIDE",
+    "seer_result": "WEREWOLF"
+  },
+  "tags": [
+    "night_kill",
+    "charm",
+    "link_death",
+    "no_suicide",
+    "no_knife"
+  ],
+  "skill_description": "每晚在狼人襲擊後單獨睜眼，指定魅惑一名玩家（不可連續兩晚魅惑同一人）。白天若狼美人被放逐或被獵人槍殺，被魅惑的玩家也會一起死亡。狼美人不可自爆，也不可自刀。",
+  "skill_rules": [
+    "與狼人一起襲擊（狼人不能襲擊你自己）；襲擊之後你單獨睜眼，魅惑一名其他玩家（不能連續兩晚魅惑同一人）。",
+    "你在白天被放逐，或被獵人（狼王）開槍帶走時，被你魅惑的玩家一起出局。",
+    "你因其他原因死亡（例如被毒、殉情）時，被魅惑的玩家不會死亡。",
+    "不能自爆，也不能自刀。"
+  ],
+  "actions": {
+    "night": true,
+    "day": false,
+    "passive": true,
+    "death_trigger": true
+  },
+  "resources": {},
+  "ability_refs": [
+    "wolf_pack_attack"
+  ],
+  "abilities": [
+    {
+      "id": "charm_player",
+      "trigger": "NIGHT",
+      "execution": {
+        "phase": "NIGHT",
+        "priority": 35,
+        "resolution_timing": "AFTER_DAMAGE",
+        "depends_on": [
+          "wolf_pack_attack"
+        ]
+      },
+      "target": {
+        "count": 1,
+        "scope": "ALIVE_PLAYERS",
+        "allow_self": false,
+        "allow_dead": false
+      },
+      "effects": [
+        {
+          "type": "SET_CHARMED_TARGET",
+          "link_death_cause": "WOLF_BEAUTY_LINK"
+        }
+      ],
+      "restrictions": [
+        {
+          "type": "NO_CONSECUTIVE_TARGET",
+          "scope": "NIGHT"
+        }
+      ],
+      "usage_limit": -1
+    }
+  ],
+  "death_trigger": {
+    "trigger_mode": "ALL",
+    "allowed_causes": [
+      "VOTE_EXILE",
+      "HUNTER_SHOT",
+      "WOLF_KING_SHOT"
+    ],
+    "forbidden_causes": [],
+    "execution": {
+      "phase": "IMMEDIATE",
+      "priority": 85,
+      "resolution_timing": "AFTER_DAMAGE",
+      "depends_on": []
+    },
+    "target": {
+      "count": 0,
+      "scope": "SELF",
+      "allow_self": false,
+      "allow_dead": false
+    },
+    "effect": {
+      "type": "KILL_LINKED_CHARMED_TARGET",
+      "cause": "WOLF_BEAUTY_LINK"
+    }
+  },
+  "dynamic_rules": [],
+  "custom_data": {}
+}

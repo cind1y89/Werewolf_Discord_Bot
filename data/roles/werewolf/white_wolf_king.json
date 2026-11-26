@@ -1,0 +1,75 @@
+{
+  "id": "white_wolf_king",
+  "name": "白狼王",
+  "en_name": "White Wolf King",
+  "initial_state": {
+    "faction": "WEREWOLF",
+    "category": "SPECIAL_WOLF",
+    "win_condition": "SLAUGHTER_SIDE",
+    "seer_result": "WEREWOLF"
+  },
+  "tags": [
+    "night_kill",
+    "suicide_kill",
+    "team_vision"
+  ],
+  "skill_description": "屬於狼人陣營。在白天發言階段（非投票放逐出局時）可以選擇自爆，並同時帶走場上任意一名玩家。若被投票放逐或夜晚死亡則無法發動技能。",
+  "skill_rules": [
+    "與狼人一起襲擊。",
+    "只能在白天發言時自爆，並帶走一名玩家，然後直接進入黑夜（投票階段不能自爆）。",
+    "被放逐或在夜晚死亡時，技能不會發動。"
+  ],
+  "actions": {
+    "night": true,
+    "day": true,
+    "passive": true,
+    "death_trigger": false
+  },
+  "resources": {},
+  "ability_refs": [
+    "wolf_pack_attack"
+  ],
+  "abilities": [
+    {
+      "id": "white_wolf_explode_kill",
+      "trigger": "DAY_SPEECH",
+      "execution": {
+        "phase": "DAY_SPEECH",
+        "priority": 10,
+        "resolution_timing": "IMMEDIATE",
+        "depends_on": []
+      },
+      "target": {
+        "count": 1,
+        "scope": "ALIVE_PLAYERS",
+        "allow_self": false,
+        "allow_dead": false
+      },
+      "effects": [
+        {
+          "type": "KILL_SELF",
+          "cause": "SUICIDE"
+        },
+        {
+          "type": "KILL_TARGET",
+          "cause": "WHITE_WOLF_KING_EXPLODE"
+        },
+        {
+          "type": "FORCE_PHASE_TRANSITION",
+          "to_phase": "NIGHT"
+        }
+      ],
+      "restrictions": [
+        {
+          "type": "RULE_SETTING_CHECK",
+          "setting": "white_wolf_king_can_explode_in_vote",
+          "expected": false
+        }
+      ],
+      "usage_limit": 1
+    }
+  ],
+  "death_trigger": null,
+  "dynamic_rules": [],
+  "custom_data": {}
+}

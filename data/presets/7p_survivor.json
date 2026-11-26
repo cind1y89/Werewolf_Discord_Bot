@@ -1,0 +1,19 @@
+{
+  "id": "7p_survivor",
+  "name": "7 人官方局：生還者",
+  "players": 7,
+  "fill_role": "villager",
+  "roles": [
+    "werewolf",
+    "seer",
+    "white_wolf_king",
+    "witch",
+    "hunter",
+    "guard",
+    "villager"
+  ],
+  "rules": {
+    "witch_first_night_self_heal": false,
+    "witch_later_nights_self_heal": false
+  }
+}

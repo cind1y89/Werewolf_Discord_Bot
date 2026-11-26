@@ -1,0 +1,32 @@
+{
+  "id": "wolf_suicide",
+  "trigger": "DAY_SPEECH",
+  "execution": {
+    "phase": "DAY_SPEECH",
+    "priority": 10,
+    "resolution_timing": "IMMEDIATE",
+    "depends_on": []
+  },
+  "target": {
+    "count": 0,
+    "scope": "SELF",
+    "allow_self": true,
+    "allow_dead": false
+  },
+  "effects": [
+    {
+      "type": "KILL_SELF",
+      "cause": "SUICIDE"
+    },
+    {
+      "type": "FORCE_PHASE_TRANSITION",
+      "to_phase": "NIGHT"
+    }
+  ],
+  "restrictions": [
+    {
+      "type": "REQUIRE_ALIVE"
+    }
+  ],
+  "usage_limit": 1
+}

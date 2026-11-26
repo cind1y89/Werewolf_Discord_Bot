@@ -1,0 +1,75 @@
+{
+  "id": "mechanical_wolf",
+  "name": "機械狼",
+  "en_name": "Mechanical Wolf",
+  "initial_state": {
+    "faction": "WEREWOLF",
+    "category": "SOLO_WOLF",
+    "win_condition": "SLAUGHTER_SIDE",
+    "seer_result": "DYNAMIC"
+  },
+  "tags": [
+    "solo_wolf",
+    "mimic_skill",
+    "dynamic_alignment"
+  ],
+  "skill_description": "不與小狼見面。首夜可選擇學習場上一名玩家的技能（若學習到神職則獲得該神職技能，若學習到狼人則在隊友全滅後獲得襲擊能力）。預言家查驗結果取決於其學習的對象陣營。",
+  "skill_rules": [
+    "不與小狼見面。第一晚選一名玩家學習他的技能，第二夜起才可以使用。",
+    "學到神職技能就能使用那個技能；學到狼人，則在其他狼人全部出局後獲得襲擊能力。",
+    "預言家查驗你的結果，依你學習的對象而定。"
+  ],
+  "actions": {
+    "night": true,
+    "day": false,
+    "passive": false,
+    "death_trigger": false
+  },
+  "resources": {},
+  "ability_refs": [],
+  "abilities": [
+    {
+      "id": "mimic_target_ability",
+      "trigger": "FIRST_NIGHT",
+      "execution": {
+        "phase": "FIRST_NIGHT",
+        "priority": 15,
+        "resolution_timing": "PRE_ACTION",
+        "depends_on": [
+          "thief",
+          "cupid",
+          "wild_child",
+          "magician"
+        ]
+      },
+      "target": {
+        "count": 1,
+        "scope": "ALIVE_PLAYERS",
+        "allow_self": false,
+        "allow_dead": false
+      },
+      "effects": [
+        {
+          "type": "COPY_TARGET_ABILITIES_AND_SEER_RESULT"
+        }
+      ],
+      "restrictions": [],
+      "usage_limit": 1
+    }
+  ],
+  "death_trigger": null,
+  "dynamic_rules": [
+    {
+      "trigger": "LAST_WOLF_STANDING",
+      "effects": [
+        {
+          "type": "GRANT_ABILITY",
+          "ability_id": "wolf_pack_attack"
+        }
+      ]
+    }
+  ],
+  "custom_data": {
+    "copied_from_player_id": null
+  }
+}

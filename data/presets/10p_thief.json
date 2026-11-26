@@ -1,0 +1,21 @@
+{
+  "id": "10p_thief",
+  "name": "10 人特殊局：幾何爆炸（盜賊）",
+  "players": 10,
+  "fill_role": "villager",
+  "roles": [
+    "werewolf",
+    "seer",
+    "werewolf",
+    "witch",
+    "werewolf",
+    "hunter",
+    "guard",
+    "thief",
+    "villager",
+    "villager",
+    "villager",
+    "villager"
+  ],
+  "note": "含盜賊的 2 張底牌共 12 張牌。原文寫「兩張底牌都是狼人則重開」，本遊戲改為盜賊必須選狼人牌。"
+}

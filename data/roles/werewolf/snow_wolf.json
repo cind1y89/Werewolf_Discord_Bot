@@ -1,0 +1,39 @@
+{
+  "tags": [
+    "night_kill",
+    "suicide",
+    "gold_water"
+  ],
+  "actions": {
+    "night": true,
+    "day": true,
+    "passive": true,
+    "death_trigger": false
+  },
+  "resources": {},
+  "ability_refs": [
+    "wolf_pack_attack",
+    "wolf_suicide"
+  ],
+  "abilities": [],
+  "death_trigger": null,
+  "dynamic_rules": [],
+  "custom_data": {},
+  "id": "snow_wolf",
+  "name": "雪狼",
+  "en_name": "Snow Wolf",
+  "initial_state": {
+    "faction": "WEREWOLF",
+    "category": "SPECIAL_WOLF",
+    "win_condition": "SLAUGHTER_SIDE",
+    "seer_result": "VILLAGER"
+  },
+  "skill_description": "與普通狼人一起睜眼、討論並參與夜晚擊殺，可以自爆。預言家查驗你會顯示為「好人」（金水）。屬於狼人陣營，與狼隊一起獲勝。",
+  "skill_rules": [
+    "與狼人一起睜眼，進入狼人頻道討論，各自投票選擇襲擊目標（可棄權）。",
+    "預言家查驗你會顯示為「好人」（金水），但你仍然是狼人陣營。",
+    "白天發言時可以自爆：立刻出局，直接進入黑夜，沒有遺言。",
+    "被騎士決鬥，你直接出局；被毒藥、獵人開槍也會死亡。",
+    "屬於狼人陣營（不是第三方），狼隊獲勝你就一起獲勝。"
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "tags": [
+    "curse",
+    "vote_interference"
+  ],
+  "actions": {
+    "night": true,
+    "day": false,
+    "passive": false,
+    "death_trigger": false
+  },
+  "resources": {},
+  "ability_refs": [],
+  "abilities": [
+    {
+      "id": "curse_player",
+      "trigger": "NIGHT",
+      "execution": {
+        "phase": "NIGHT",
+        "priority": 26,
+        "resolution_timing": "PRE_ACTION",
+        "depends_on": [
+          "magician"
+        ]
+      },
+      "target": {
+        "count": 1,
+        "scope": "ALIVE_PLAYERS",
+        "allow_self": false,
+        "allow_dead": false
+      },
+      "effects": [
+        {
+          "type": "CURSE_EXTRA_VOTES"
+        }
+      ],
+      "restrictions": [
+        {
+          "type": "NO_CONSECUTIVE_TARGET",
+          "scope": "NIGHT"
+        }
+      ],
+      "usage_limit": -1
+    }
+  ],
+  "death_trigger": null,
+  "dynamic_rules": [],
+  "custom_data": {
+    "last_cursed_player_id": null
+  },
+  "id": "crow",
+  "name": "烏鴉",
+  "en_name": "Crow",
+  "initial_state": {
+    "faction": "VILLAGER",
+    "category": "GOD",
+    "win_condition": "ELIMINATE_ALL_WOLVES",
+    "seer_result": "VILLAGER"
+  },
+  "skill_description": "每晚可以詛咒一名玩家（也可以不發動）。被詛咒的玩家在隔天的放逐投票中，會額外增加 1 票。",
+  "skill_rules": [
+    "每晚可以詛咒一名其他玩家，或選擇不發動技能。",
+    "不能詛咒自己，也不能連續兩晚詛咒同一人。",
+    "被詛咒的玩家在隔天的放逐投票中額外增加 1 票（只算第一輪放逐投票，平票PK重投不加）。",
+    "被詛咒的玩家當晚死亡（被狼人殺死、被毒死…）時，詛咒失效。你自己當晚死亡，已發動的詛咒仍然生效。",
+    "預設不公開誰被詛咒，只有你知道；選擇空過則不增加票數。",
+    "被夢魘恐懼的那晚不能詛咒。"
+  ]
+}

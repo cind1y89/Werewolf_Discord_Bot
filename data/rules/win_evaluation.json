@@ -1,0 +1,29 @@
+{
+  "win_check_timings": [
+    "AFTER_NIGHT_RESOLUTION",
+    "AFTER_DAY_VOTE",
+    "AFTER_IMMEDIATE_ACTION",
+    "ON_PHASE_CHANGE"
+  ],
+  "rules": {
+    "villager_win": {
+      "condition": "ALL_WOLVES_ELIMINATED",
+      "excludes_active_third_party_lovers": true
+    },
+    "werewolf_win": {
+      "modes": [
+        "SLAUGHTER_SIDE",
+        "SLAUGHTER_CITY"
+      ],
+      "side_targets": [
+        "ALL_CITIZENS_ELIMINATED",
+        "ALL_GODS_ELIMINATED"
+      ],
+      "city_target": "ALL_VILLAGERS_ELIMINATED"
+    },
+    "third_party_lovers_win": {
+      "activated_on_trigger": "LOVERS_MIXED_FACTION",
+      "condition": "LOVERS_AND_CUPID_SURVIVE_UNTIL_OTHERS_ELIMINATED"
+    }
+  }
+}

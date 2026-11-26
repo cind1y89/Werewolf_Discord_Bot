@@ -1,0 +1,35 @@
+{
+  "tags": [
+    "third_party",
+    "bait"
+  ],
+  "actions": {
+    "night": false,
+    "day": false,
+    "passive": false,
+    "death_trigger": false
+  },
+  "resources": {},
+  "ability_refs": [],
+  "abilities": [],
+  "death_trigger": null,
+  "dynamic_rules": [],
+  "custom_data": {},
+  "id": "jester",
+  "name": "小丑",
+  "en_name": "Jester",
+  "initial_state": {
+    "faction": "THIRD_PARTY",
+    "category": "NEUTRAL",
+    "win_condition": "BE_EXILED",
+    "seer_result": "VILLAGER"
+  },
+  "skill_description": "沒有夜晚技能，不屬於好人也不屬於狼人。你的目標是讓大家懷疑你，在白天的放逐投票中被公投出局。",
+  "skill_rules": [
+    "沒有夜晚技能；白天可以正常發言、競選警長、投票，也可以偽裝成任何角色。",
+    "只有在「白天放逐投票」中被放逐才算獲勝（個人勝利）。",
+    "夜晚被狼人殺死、被毒死、被獵人或狼王開槍帶走、被白狼王帶走、被其他技能擊殺，都算失敗。",
+    "預言家查驗你會顯示為「好人」。",
+    "你的個人勝利預設不會結束遊戲：好人與狼人繼續分勝負（可在規則設定 jester_win_ends_game 改成「小丑獲勝就結束遊戲」）。"
+  ]
+}

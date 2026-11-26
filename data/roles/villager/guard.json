@@ -1,0 +1,76 @@
+{
+  "id": "guard",
+  "name": "守衛",
+  "en_name": "Guard",
+  "initial_state": {
+    "faction": "VILLAGER",
+    "category": "GOD",
+    "win_condition": "ELIMINATE_ALL_WOLVES",
+    "seer_result": "VILLAGER"
+  },
+  "tags": [
+    "protect",
+    "no_consecutive_target"
+  ],
+  "skill_description": "每晚可以守護一名玩家（包含自己），使其免受狼人襲擊，但不可連續兩晚守護同一人。若守衛守護的玩家同時被女巫使用解藥，該玩家仍會死亡（同守同救規則）。",
+  "skill_rules": [
+    "每晚守護一名玩家（可以守自己），使其免受狼人襲擊。",
+    "不能連續兩晚守護同一個人。",
+    "只防得了狼人襲擊，擋不了毒藥等其他死因。",
+    "同守同救：你守護的人同時被女巫解藥救，該玩家仍會死亡。",
+    "被夢魘恐懼的那晚不能守護。"
+  ],
+  "actions": {
+    "night": true,
+    "day": false,
+    "passive": false,
+    "death_trigger": false
+  },
+  "resources": {},
+  "ability_refs": [],
+  "abilities": [
+    {
+      "id": "guard_protect",
+      "trigger": "NIGHT",
+      "execution": {
+        "phase": "NIGHT",
+        "priority": 20,
+        "resolution_timing": "BEFORE_DAMAGE",
+        "depends_on": [
+          "magician"
+        ]
+      },
+      "target": {
+        "count": 1,
+        "scope": "ALIVE_PLAYERS",
+        "allow_self": true,
+        "allow_dead": false
+      },
+      "effects": [
+        {
+          "type": "PROTECT",
+          "against": [
+            "WOLF_ATTACK"
+          ]
+        }
+      ],
+      "restrictions": [
+        {
+          "type": "NO_CONSECUTIVE_TARGET",
+          "scope": "NIGHT",
+          "rule_key": "guard_same_target_restriction"
+        },
+        {
+          "type": "SELF_PROTECT_RULE_CHECK",
+          "rule_key": "guard_can_self_protect"
+        }
+      ],
+      "usage_limit": -1
+    }
+  ],
+  "death_trigger": null,
+  "dynamic_rules": [],
+  "custom_data": {
+    "last_guarded_player_id": null
+  }
+}

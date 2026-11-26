@@ -1,0 +1,24 @@
+{
+  "id": "12p_gargoyle_gravekeeper",
+  "name": "12 人官方局：石像守墓",
+  "players": 12,
+  "fill_role": "villager",
+  "roles": [
+    "gargoyle",
+    "seer",
+    "werewolf",
+    "witch",
+    "werewolf",
+    "hunter",
+    "werewolf",
+    "gravekeeper",
+    "villager",
+    "villager",
+    "villager",
+    "villager"
+  ],
+  "rules": {
+    "witch_first_night_self_heal": false,
+    "witch_later_nights_self_heal": false
+  }
+}

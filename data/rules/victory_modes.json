@@ -1,0 +1,25 @@
+{
+  "default": "SLAUGHTER_SIDE",
+  "modes": {
+    "SLAUGHTER_SIDE": {
+      "name": "屠邊",
+      "description": "狼人消滅所有平民或所有神職即獲勝",
+      "wolf_targets": [
+        "ALL_CITIZENS_ELIMINATED",
+        "ALL_GODS_ELIMINATED"
+      ]
+    },
+    "SLAUGHTER_CITY": {
+      "name": "屠城",
+      "description": "狼人須消滅所有好人才獲勝",
+      "wolf_targets": [
+        "ALL_VILLAGERS_ELIMINATED"
+      ]
+    }
+  },
+  "wolf_targets": {
+    "ALL_CITIZENS_ELIMINATED": "屠平民",
+    "ALL_GODS_ELIMINATED": "屠神職",
+    "ALL_VILLAGERS_ELIMINATED": "屠全部好人"
+  }
+}

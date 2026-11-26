@@ -1,0 +1,67 @@
+{
+  "id": "hunter",
+  "name": "獵人",
+  "en_name": "Hunter",
+  "initial_state": {
+    "faction": "VILLAGER",
+    "category": "GOD",
+    "win_condition": "ELIMINATE_ALL_WOLVES",
+    "seer_result": "VILLAGER"
+  },
+  "tags": [
+    "death_trigger_kill"
+  ],
+  "skill_description": "當被狼人襲擊出局或白天被投票放逐出局時，可以發動技能開槍射殺場上一名玩家。被另一位獵人或狼王開槍帶走時，也可以開槍（連鎖開槍）。若被女巫毒殺、殉情或被夢遊者等特殊技能影響，則無法開槍。",
+  "skill_rules": [
+    "死亡時可以開槍帶走一名玩家（只有一發子彈）。",
+    "「被狼人殺死」、「被放逐」、「被獵人或狼王開槍帶走」時都能開槍，所以獵人之間可以連續開槍；被毒死、殉情、被決鬥或狩獵等其他死因都不能開槍。",
+    "當晚被夢魘恐懼並在夜裡死亡，也不能開槍。"
+  ],
+  "actions": {
+    "night": false,
+    "day": false,
+    "passive": false,
+    "death_trigger": true
+  },
+  "resources": {
+    "bullet": {
+      "initial": 1,
+      "max": 1
+    }
+  },
+  "ability_refs": [],
+  "abilities": [],
+  "death_trigger": {
+    "trigger_mode": "ALL",
+    "allowed_causes": [
+      "WOLF_ATTACK",
+      "VOTE_EXILE",
+      "HUNTER_SHOT",
+      "WOLF_KING_SHOT"
+    ],
+    "forbidden_causes": [
+      "WITCH_POISON",
+      "LOVER_LINK",
+      "WOLF_BEAUTY_LINK",
+      "DREAM_CATCHER_EFFECT"
+    ],
+    "execution": {
+      "phase": "IMMEDIATE",
+      "priority": 90,
+      "resolution_timing": "AFTER_DAMAGE",
+      "depends_on": []
+    },
+    "target": {
+      "count": 1,
+      "scope": "ALIVE_PLAYERS",
+      "allow_self": false,
+      "allow_dead": false
+    },
+    "effect": {
+      "type": "KILL_TARGET",
+      "cause": "HUNTER_SHOT"
+    }
+  },
+  "dynamic_rules": [],
+  "custom_data": {}
+}

@@ -1,0 +1,80 @@
+{
+  "id": "cupid",
+  "name": "邱比特",
+  "en_name": "Cupid",
+  "initial_state": {
+    "faction": "VILLAGER",
+    "category": "NEUTRAL",
+    "win_condition": "ELIMINATE_ALL_WOLVES",
+    "seer_result": "VILLAGER"
+  },
+  "tags": [
+    "link_lovers",
+    "dynamic_alignment",
+    "first_night_only"
+  ],
+  "skill_description": "首夜在所有角色行動前睜眼，指定任意兩名玩家成為「情侶」（可包含自己）。情侶一方出局，另一方立即殉情。若情侶為一好人一狼人，則邱比特與情侶組成獨立的第三方陣營，需消滅場上其他所有玩家才能獲勝。",
+  "skill_rules": [
+    "第一晚指定兩名玩家成為情侶（可以包含自己）。",
+    "情侶任何一方死亡，另一方立刻殉情；殉情死亡的人不能開槍。",
+    "若情侶是一好人一狼人，情侶與你組成第三方陣營。",
+    "只有第一晚行動；被夢魘恐懼的那晚不能連結。"
+  ],
+  "actions": {
+    "night": true,
+    "day": false,
+    "passive": true,
+    "death_trigger": true
+  },
+  "resources": {},
+  "ability_refs": [],
+  "abilities": [
+    {
+      "id": "bind_lovers",
+      "trigger": "FIRST_NIGHT",
+      "execution": {
+        "phase": "FIRST_NIGHT",
+        "priority": 5,
+        "resolution_timing": "PRE_ACTION",
+        "depends_on": [
+          "thief"
+        ]
+      },
+      "target": {
+        "count": 2,
+        "scope": "ALIVE_PLAYERS",
+        "allow_self": true,
+        "allow_dead": false
+      },
+      "effects": [
+        {
+          "type": "LINK_LOVERS",
+          "link_death_cause": "LOVER_LINK",
+          "includes_cupid_in_third_party_when_mixed": true
+        },
+        {
+          "type": "EVALUATE_THIRD_PARTY_LOVERS_WIN_CONDITION"
+        }
+      ],
+      "restrictions": [],
+      "usage_limit": 1
+    }
+  ],
+  "death_trigger": null,
+  "dynamic_rules": [
+    {
+      "trigger": "LOVERS_MIXED_FACTION",
+      "effects": [
+        {
+          "type": "SET_FACTION",
+          "faction": "THIRD_PARTY"
+        },
+        {
+          "type": "SET_WIN_CONDITION",
+          "win_condition": "SURVIVE_TO_END"
+        }
+      ]
+    }
+  ],
+  "custom_data": {}
+}

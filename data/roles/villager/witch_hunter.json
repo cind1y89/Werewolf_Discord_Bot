@@ -1,0 +1,96 @@
+{
+  "id": "witch_hunter",
+  "name": "獵魔人",
+  "en_name": "Witch Hunter",
+  "initial_state": {
+    "faction": "VILLAGER",
+    "category": "GOD",
+    "win_condition": "ELIMINATE_ALL_WOLVES",
+    "seer_result": "VILLAGER"
+  },
+  "tags": [
+    "hunt_wolf",
+    "poison_immune"
+  ],
+  "skill_description": "從第二晚開始，每晚可以選擇狩獵一名玩家。若對方是狼人，次日該狼人出局；若對方是好人，次日獵魔人自己出局。女巫的毒藥對獵魔人無效。",
+  "skill_rules": [
+    "從第二晚起，每晚可以狩獵一名玩家。",
+    "對方是狼人：狼人出局。對方是好人：你自己出局。",
+    "女巫的毒藥對你無效。"
+  ],
+  "actions": {
+    "night": true,
+    "day": false,
+    "passive": true,
+    "death_trigger": false
+  },
+  "resources": {},
+  "ability_refs": [],
+  "abilities": [
+    {
+      "id": "hunt_suspect",
+      "trigger": "NIGHT",
+      "execution": {
+        "phase": "NIGHT",
+        "priority": 42,
+        "resolution_timing": "ON_DAMAGE",
+        "depends_on": [
+          "magician"
+        ]
+      },
+      "target": {
+        "count": 1,
+        "scope": "ALIVE_PLAYERS",
+        "allow_self": false,
+        "allow_dead": false
+      },
+      "effects": [
+        {
+          "type": "HUNT_RESOLVE",
+          "on_target_wolf": {
+            "kill_target_cause": "WITCH_HUNTER_HUNT"
+          },
+          "on_target_non_wolf": {
+            "kill_self_cause": "WITCH_HUNTER_HUNT"
+          }
+        }
+      ],
+      "restrictions": [
+        {
+          "type": "MIN_NIGHT_NUMBER",
+          "night": 2
+        }
+      ],
+      "usage_limit": -1
+    },
+    {
+      "id": "immune_witch_poison",
+      "trigger": "PASSIVE",
+      "execution": {
+        "phase": "NIGHT",
+        "priority": 5,
+        "resolution_timing": "BEFORE_DAMAGE",
+        "depends_on": []
+      },
+      "target": {
+        "count": 0,
+        "scope": "SELF",
+        "allow_self": true,
+        "allow_dead": false
+      },
+      "effects": [
+        {
+          "type": "IMMUNE_DEATH_CAUSE",
+          "causes": [
+            "WITCH_POISON"
+          ]
+        }
+      ],
+      "restrictions": [],
+      "usage_limit": -1
+    }
+  ],
+  "death_trigger": null,
+  "dynamic_rules": [],
+  "custom_data": {}
+}

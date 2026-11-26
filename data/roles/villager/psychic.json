@@ -1,0 +1,59 @@
+{
+  "id": "psychic",
+  "name": "通靈師",
+  "en_name": "Psychic",
+  "initial_state": {
+    "faction": "VILLAGER",
+    "category": "GOD",
+    "win_condition": "ELIMINATE_ALL_WOLVES",
+    "seer_result": "VILLAGER"
+  },
+  "tags": [
+    "exact_check",
+    "info_gatherer"
+  ],
+  "skill_description": "每晚可以查驗自己以外一名玩家的真實角色身分（不是只有好人或狼人）。死亡後不能查驗，被夢魘恐懼的那晚也不能查驗。查驗結果只有自己知道，需要在白天透過發言公布。",
+  "skill_rules": [
+    "每晚查驗一名還活著的其他玩家的真實角色（不只是好人或狼人）。",
+    "被夢魘恐懼的那晚不能查驗。",
+    "查驗結果只有你自己知道，需要在白天用發言公布。"
+  ],
+  "actions": {
+    "night": true,
+    "day": false,
+    "passive": false,
+    "death_trigger": false
+  },
+  "resources": {},
+  "ability_refs": [],
+  "abilities": [
+    {
+      "id": "exact_role_check",
+      "trigger": "NIGHT",
+      "execution": {
+        "phase": "NIGHT",
+        "priority": 51,
+        "resolution_timing": "END_OF_NIGHT",
+        "depends_on": [
+          "magician"
+        ]
+      },
+      "target": {
+        "count": 1,
+        "scope": "ALIVE_PLAYERS",
+        "allow_self": false,
+        "allow_dead": false
+      },
+      "effects": [
+        {
+          "type": "REVEAL_EXACT_ROLE"
+        }
+      ],
+      "restrictions": [],
+      "usage_limit": -1
+    }
+  ],
+  "death_trigger": null,
+  "dynamic_rules": [],
+  "custom_data": {}
+}

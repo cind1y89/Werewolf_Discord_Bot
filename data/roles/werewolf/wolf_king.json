@@ -1,0 +1,77 @@
+{
+  "id": "wolf_king",
+  "name": "狼王",
+  "en_name": "Wolf King",
+  "initial_state": {
+    "faction": "WEREWOLF",
+    "category": "SPECIAL_WOLF",
+    "win_condition": "SLAUGHTER_SIDE",
+    "seer_result": "WEREWOLF"
+  },
+  "tags": [
+    "night_kill",
+    "suicide",
+    "death_trigger_kill",
+    "team_vision"
+  ],
+  "skill_description": "屬於狼人陣營。死亡時可以開槍帶走場上一名玩家（同獵人能力），例如被放逐、被獵人射殺、被騎士決鬥或自刀出局；但若是被女巫毒殺、殉情、被攝夢連帶死亡或自爆出局，則無法發動技能。",
+  "skill_rules": [
+    "與狼人一起襲擊。白天發言時可以自爆。",
+    "死亡時可以開槍帶走一名玩家（只有一發子彈）；被獵人或另一位狼王開槍帶走時也可以開槍（連鎖開槍）。",
+    "被女巫毒殺、殉情（情侶或狼美人魅惑）、被攝夢連帶死亡時不能開槍；自爆也不能開槍。"
+  ],
+  "actions": {
+    "night": true,
+    "day": true,
+    "passive": true,
+    "death_trigger": true
+  },
+  "resources": {
+    "bullet": {
+      "initial": 1,
+      "max": 1
+    }
+  },
+  "ability_refs": [
+    "wolf_pack_attack",
+    "wolf_suicide"
+  ],
+  "abilities": [],
+  "death_trigger": {
+    "trigger_mode": "ALL",
+    "allowed_causes": [
+      "VOTE_EXILE",
+      "HUNTER_SHOT",
+      "WOLF_ATTACK",
+      "KNIGHT_DUEL",
+      "WITCH_HUNTER_HUNT",
+      "NIGHTMARE_REFLECT",
+      "WOLF_KING_SHOT"
+    ],
+    "forbidden_causes": [
+      "WITCH_POISON",
+      "LOVER_LINK",
+      "WOLF_BEAUTY_LINK",
+      "DREAM_CATCHER_EFFECT",
+      "SUICIDE"
+    ],
+    "execution": {
+      "phase": "IMMEDIATE",
+      "priority": 90,
+      "resolution_timing": "AFTER_DAMAGE",
+      "depends_on": []
+    },
+    "target": {
+      "count": 1,
+      "scope": "ALIVE_PLAYERS",
+      "allow_self": false,
+      "allow_dead": false
+    },
+    "effect": {
+      "type": "KILL_TARGET",
+      "cause": "WOLF_KING_SHOT"
+    }
+  },
+  "dynamic_rules": [],
+  "custom_data": {}
+}

@@ -1,0 +1,16 @@
+{
+  "id": "8p_ragnarok",
+  "name": "8 人官方局：諸神黃昏",
+  "players": 8,
+  "fill_role": "villager",
+  "roles": [
+    "nightmare_wolf",
+    "seer",
+    "white_wolf_king",
+    "witch",
+    "wolf_king",
+    "hunter",
+    "guard",
+    "idiot"
+  ]
+}

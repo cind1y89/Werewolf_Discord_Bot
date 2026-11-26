@@ -1,0 +1,124 @@
+{
+  "id": "witch",
+  "name": "女巫",
+  "en_name": "Witch",
+  "initial_state": {
+    "faction": "VILLAGER",
+    "category": "GOD",
+    "win_condition": "ELIMINATE_ALL_WOLVES",
+    "seer_result": "VILLAGER"
+  },
+  "tags": [
+    "heal",
+    "poison",
+    "dual_potion"
+  ],
+  "skill_description": "擁有一瓶解藥與一瓶毒藥。解藥可救活當晚被狼人襲擊的玩家（部分規則限制首夜後不可自救）；毒藥可在夜晚毒殺任意一名玩家。同一晚不可同時使用兩瓶藥。",
+  "skill_rules": [
+    "有一瓶解藥、一瓶毒藥，各只能用一次，同一晚只能用一瓶。",
+    "解藥：救當晚被狼人襲擊的玩家（依規則可以自救）。毒藥：毒殺一名其他玩家（不能毒自己）。",
+    "同守同救：你救的人同時被守衛守護，該玩家仍會死亡。",
+    "被毒死的人不能開槍。毒藥對獵魔人無效；毒到還有反傷次數的惡靈騎士無效，且次日你出局。",
+    "被夢魘恐懼的那晚不能用藥。"
+  ],
+  "actions": {
+    "night": true,
+    "day": false,
+    "passive": false,
+    "death_trigger": false
+  },
+  "resources": {
+    "antidote": {
+      "initial": 1,
+      "max": 1
+    },
+    "poison": {
+      "initial": 1,
+      "max": 1
+    }
+  },
+  "ability_refs": [],
+  "abilities": [
+    {
+      "id": "use_antidote",
+      "trigger": "NIGHT",
+      "resource": "antidote",
+      "execution": {
+        "phase": "NIGHT",
+        "priority": 40,
+        "resolution_timing": "BEFORE_DAMAGE",
+        "depends_on": [
+          "wolf_pack_attack",
+          "magician",
+          "guard"
+        ]
+      },
+      "target": {
+        "count": 1,
+        "scope": "WOLF_ATTACK_VICTIMS",
+        "allow_self": true,
+        "allow_dead": false
+      },
+      "effects": [
+        {
+          "type": "PREVENT_DEATH",
+          "cause": "WOLF_ATTACK",
+          "respect_rule": "guard_and_witch_heal_conflict"
+        }
+      ],
+      "restrictions": [
+        {
+          "type": "MUTUALLY_EXCLUSIVE",
+          "resources": [
+            "antidote",
+            "poison"
+          ],
+          "scope": "SAME_NIGHT"
+        },
+        {
+          "type": "SELF_HEAL_RULE_CHECK"
+        }
+      ],
+      "usage_limit": 1
+    },
+    {
+      "id": "use_poison",
+      "trigger": "NIGHT",
+      "resource": "poison",
+      "execution": {
+        "phase": "NIGHT",
+        "priority": 40,
+        "resolution_timing": "ON_DAMAGE",
+        "depends_on": [
+          "magician"
+        ]
+      },
+      "target": {
+        "count": 1,
+        "scope": "ALIVE_PLAYERS",
+        "allow_self": true,
+        "allow_dead": false
+      },
+      "effects": [
+        {
+          "type": "INFLICT_DEATH",
+          "cause": "WITCH_POISON"
+        }
+      ],
+      "restrictions": [
+        {
+          "type": "MUTUALLY_EXCLUSIVE",
+          "resources": [
+            "antidote",
+            "poison"
+          ],
+          "scope": "SAME_NIGHT"
+        }
+      ],
+      "usage_limit": 1
+    }
+  ],
+  "death_trigger": null,
+  "dynamic_rules": [],
+  "custom_data": {}
+}

@@ -1,0 +1,37 @@
+[
+  {
+    "step": 1,
+    "stage": "COLLECT_NIGHT_ACTIONS",
+    "description": "收集所有夜間主動與首夜技能指令"
+  },
+  {
+    "step": 2,
+    "stage": "APPLY_REDIRECTS_AND_PROTECTIONS",
+    "description": "計算目標交換（魔術師）、守護與夢遊免疫"
+  },
+  {
+    "step": 3,
+    "stage": "COLLECT_DAMAGE_EVENTS",
+    "description": "收集狼刀、女巫毒藥、獵魔人狩獵等傷害事件"
+  },
+  {
+    "step": 4,
+    "stage": "RESOLVE_HEAL_AND_IMMUNITY",
+    "description": "套用女巫解藥、同守同救衝突規則與免疫判定"
+  },
+  {
+    "step": 5,
+    "stage": "COMMIT_DEATHS",
+    "description": "確認實際死亡名單（含延遲死亡標記）"
+  },
+  {
+    "step": 6,
+    "stage": "RESOLVE_DEATH_CHAIN_AND_REFLECT",
+    "description": "處理殉情、魅惑連動、惡靈騎士反傷與死亡開槍"
+  },
+  {
+    "step": 7,
+    "stage": "EVALUATE_WIN_CONDITIONS",
+    "description": "依 win_evaluation 規則判定勝負"
+  }
+]

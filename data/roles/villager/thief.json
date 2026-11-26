@@ -1,0 +1,63 @@
+{
+  "id": "thief",
+  "name": "盜賊",
+  "en_name": "Thief",
+  "initial_state": {
+    "faction": "VILLAGER",
+    "category": "NEUTRAL",
+    "win_condition": "ELIMINATE_ALL_WOLVES",
+    "seer_result": "DYNAMIC"
+  },
+  "tags": [
+    "pick_role",
+    "first_night_only",
+    "dynamic_alignment"
+  ],
+  "skill_description": "遊戲發牌時會多發兩張底牌。首夜盜賊睜眼查看這兩張底牌並選擇其中一張作為自己本局的真實身分（若兩張底牌中有狼人牌，則必須強制選擇狼人牌）。",
+  "skill_rules": [
+    "遊戲多發兩張底牌，第一晚你選其中一張作為本局身分。",
+    "底牌中若有狼人牌，必須選狼人牌。",
+    "換牌後你立刻變成新身分，依新身分的技能與勝利條件進行遊戲。"
+  ],
+  "actions": {
+    "night": true,
+    "day": false,
+    "passive": false,
+    "death_trigger": false
+  },
+  "resources": {},
+  "ability_refs": [],
+  "abilities": [
+    {
+      "id": "pick_bottom_card_role",
+      "trigger": "FIRST_NIGHT",
+      "execution": {
+        "phase": "FIRST_NIGHT",
+        "priority": 1,
+        "resolution_timing": "PRE_ACTION",
+        "depends_on": []
+      },
+      "target": {
+        "count": 1,
+        "scope": "BOTTOM_CARDS",
+        "allow_self": false,
+        "allow_dead": false
+      },
+      "effects": [
+        {
+          "type": "TRANSFORM_ROLE_FROM_BOTTOM_CARD"
+        }
+      ],
+      "restrictions": [
+        {
+          "type": "FORCE_WOLF_IF_PRESENT_IN_BOTTOM_CARDS",
+          "rule_key": "thief_must_pick_wolf_if_available"
+        }
+      ],
+      "usage_limit": 1
+    }
+  ],
+  "death_trigger": null,
+  "dynamic_rules": [],
+  "custom_data": {}
+}

@@ -1,0 +1,79 @@
+{
+  "id": "blood_moon_apostle",
+  "name": "血月使徒",
+  "en_name": "Blood Moon Apostle",
+  "initial_state": {
+    "faction": "WEREWOLF",
+    "category": "SPECIAL_WOLF",
+    "win_condition": "SLAUGHTER_SIDE",
+    "seer_result": "WEREWOLF"
+  },
+  "tags": [
+    "suicide_seal",
+    "last_wolf_survive"
+  ],
+  "skill_description": "自爆後立刻進入夜晚，當晚所有好人神職無法使用技能。若你是最後一隻被投票放逐的狼人，不會立刻死亡，遊戲會進入最後一晚，由你在該晚指定殺死一名玩家；那一晚結束後，如果好人陣營已被屠邊，狼人陣營獲勝，否則好人獲勝。",
+  "skill_rules": [
+    "白天發言時可以自爆：直接進入黑夜，並封印當晚所有好人神職的技能。",
+    "若你是最後一隻狼人且被放逐，不會立刻死亡，撐到最後一晚；你在該晚仍可與狼人一起襲擊（指定殺死一名玩家）。",
+    "最後一晚結束，你死亡後：若好人陣營達成被屠邊（依本局遊戲模式）則狼人獲勝，否則好人獲勝。",
+    "與狼人一起襲擊。"
+  ],
+  "actions": {
+    "night": true,
+    "day": true,
+    "passive": true,
+    "death_trigger": false
+  },
+  "resources": {},
+  "ability_refs": [
+    "wolf_pack_attack"
+  ],
+  "abilities": [
+    {
+      "id": "blood_moon_explode_seal",
+      "trigger": "DAY_SPEECH",
+      "execution": {
+        "phase": "DAY_SPEECH",
+        "priority": 10,
+        "resolution_timing": "IMMEDIATE",
+        "depends_on": []
+      },
+      "target": {
+        "count": 0,
+        "scope": "SELF",
+        "allow_self": true,
+        "allow_dead": false
+      },
+      "effects": [
+        {
+          "type": "KILL_SELF",
+          "cause": "SUICIDE"
+        },
+        {
+          "type": "SEAL_GOD_ABILITIES_FOR_NIGHT"
+        },
+        {
+          "type": "FORCE_PHASE_TRANSITION",
+          "to_phase": "NIGHT"
+        }
+      ],
+      "restrictions": [],
+      "usage_limit": 1
+    }
+  ],
+  "death_trigger": null,
+  "dynamic_rules": [
+    {
+      "trigger": "LAST_WOLF_STANDING",
+      "effects": [
+        {
+          "type": "DELAY_VOTE_EXILE_DEATH",
+          "cause": "VOTE_EXILE",
+          "until_phase": "NEXT_DAY"
+        }
+      ]
+    }
+  ],
+  "custom_data": {}
+}

@@ -1,0 +1,14 @@
+{
+  "id": "6p_basic",
+  "name": "6 人基本局",
+  "players": 6,
+  "fill_role": "villager",
+  "roles": [
+    "werewolf",
+    "seer",
+    "werewolf",
+    "witch",
+    "villager",
+    "villager"
+  ]
+}

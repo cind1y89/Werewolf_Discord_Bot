@@ -1,0 +1,24 @@
+{
+  "id": "12p_blood_moon_hunter",
+  "name": "12 人官方局：血月獵魔",
+  "players": 12,
+  "fill_role": "villager",
+  "roles": [
+    "werewolf",
+    "seer",
+    "werewolf",
+    "witch",
+    "werewolf",
+    "witch_hunter",
+    "blood_moon_apostle",
+    "idiot",
+    "villager",
+    "villager",
+    "villager",
+    "villager"
+  ],
+  "rules": {
+    "witch_first_night_self_heal": false,
+    "witch_later_nights_self_heal": false
+  }
+}

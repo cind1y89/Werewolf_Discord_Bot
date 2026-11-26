@@ -1,0 +1,64 @@
+{
+  "id": "fortune_teller",
+  "name": "占卜師",
+  "en_name": "Fortune Teller",
+  "initial_state": {
+    "faction": "VILLAGER",
+    "category": "GOD",
+    "win_condition": "ELIMINATE_ALL_WOLVES",
+    "seer_result": "VILLAGER"
+  },
+  "tags": [
+    "night_bind",
+    "once_per_game"
+  ],
+  "skill_description": "占卜師是夜晚第一個行動的人，可以選擇要不要發動技能，整局只能發動一次。指定一位玩家，該玩家與他左右兩邊的玩家共三人被綁定，狼人那晚只能殺這三人其中一個。",
+  "skill_rules": [
+    "每晚最先行動，可以選擇不發動；整局只能發動一次（選擇不發動不算用掉）。",
+    "指定一位玩家（可以是自己）：他和左右兩位存活的鄰居，共三人被綁定。",
+    "發動的那一晚，狼人只能從這三人之中選擇襲擊目標（也可以棄權不襲擊）。",
+    "被夢魘恐懼的那晚不能發動。"
+  ],
+  "actions": {
+    "night": true,
+    "day": false,
+    "passive": false,
+    "death_trigger": false
+  },
+  "resources": {
+    "bind_charge": {
+      "initial": 1,
+      "max": 1
+    }
+  },
+  "ability_refs": [],
+  "abilities": [
+    {
+      "id": "bind_three",
+      "trigger": "NIGHT",
+      "resource": "bind_charge",
+      "execution": {
+        "phase": "NIGHT",
+        "priority": 0.5,
+        "resolution_timing": "PRE_ACTION",
+        "depends_on": []
+      },
+      "target": {
+        "count": 1,
+        "scope": "ALIVE_PLAYERS",
+        "allow_self": true,
+        "allow_dead": false
+      },
+      "effects": [
+        {
+          "type": "BIND_THREE_PLAYERS"
+        }
+      ],
+      "restrictions": [],
+      "usage_limit": 1
+    }
+  ],
+  "death_trigger": null,
+  "dynamic_rules": [],
+  "custom_data": {}
+}

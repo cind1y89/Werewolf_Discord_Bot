@@ -1,0 +1,65 @@
+{
+  "id": "magician",
+  "name": "魔術師",
+  "en_name": "Magician",
+  "initial_state": {
+    "faction": "VILLAGER",
+    "category": "GOD",
+    "win_condition": "ELIMINATE_ALL_WOLVES",
+    "seer_result": "VILLAGER"
+  },
+  "tags": [
+    "swap_targets",
+    "first_action"
+  ],
+  "skill_description": "每晚在所有其他角色行動前睜眼，指定交換兩名玩家的號碼牌，當晚所有針對其中一人的技能（查驗、襲擊、毒藥、守護等）都會作用在另一人身上。每名玩家整局只能被交換一次。",
+  "skill_rules": [
+    "每晚在大部分角色之前睜眼，交換兩名玩家的號碼牌。",
+    "當晚所有針對其中一人的技能（查驗、襲擊、毒藥、守護等）都會作用在另一人身上。",
+    "每名玩家整局只能被交換一次。"
+  ],
+  "actions": {
+    "night": true,
+    "day": false,
+    "passive": false,
+    "death_trigger": false
+  },
+  "resources": {},
+  "ability_refs": [],
+  "abilities": [
+    {
+      "id": "swap_two_players",
+      "trigger": "NIGHT",
+      "execution": {
+        "phase": "NIGHT",
+        "priority": 10,
+        "resolution_timing": "PRE_ACTION",
+        "depends_on": [
+          "thief",
+          "cupid",
+          "wild_child"
+        ]
+      },
+      "target": {
+        "count": 2,
+        "scope": "ALIVE_PLAYERS",
+        "allow_self": true,
+        "allow_dead": false
+      },
+      "effects": [
+        {
+          "type": "SWAP_SKILL_REDIRECT_TARGETS"
+        }
+      ],
+      "restrictions": [
+        {
+          "type": "PER_TARGET_ONCE_IN_GAME"
+        }
+      ],
+      "usage_limit": -1
+    }
+  ],
+  "death_trigger": null,
+  "dynamic_rules": [],
+  "custom_data": {}
+}

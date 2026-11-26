@@ -1,0 +1,18 @@
+{
+  "id": "10p_snow_wolf_knight",
+  "name": "10 人官方局：雪狼騎士",
+  "players": 10,
+  "fill_role": "villager",
+  "roles": [
+    "werewolf",
+    "seer",
+    "werewolf",
+    "witch",
+    "snow_wolf",
+    "hunter",
+    "knight",
+    "villager",
+    "villager",
+    "villager"
+  ]
+}

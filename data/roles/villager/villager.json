@@ -1,0 +1,31 @@
+{
+  "id": "villager",
+  "name": "平民",
+  "en_name": "Villager",
+  "initial_state": {
+    "faction": "VILLAGER",
+    "category": "CITIZEN",
+    "win_condition": "ELIMINATE_ALL_WOLVES",
+    "seer_result": "VILLAGER"
+  },
+  "tags": [
+    "no_skill"
+  ],
+  "skill_description": "沒有任何特殊技能，夜晚全程閉眼。依靠白天的發言分析、邏輯推理與投票來找出並放逐狼人。",
+  "skill_rules": [
+    "沒有技能，夜晚不需要行動。",
+    "白天靠發言與推理，投票放逐可疑的玩家。"
+  ],
+  "actions": {
+    "night": false,
+    "day": false,
+    "passive": false,
+    "death_trigger": false
+  },
+  "resources": {},
+  "ability_refs": [],
+  "abilities": [],
+  "death_trigger": null,
+  "dynamic_rules": [],
+  "custom_data": {}
+}

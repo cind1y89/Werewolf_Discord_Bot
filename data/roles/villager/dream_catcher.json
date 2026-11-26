@@ -1,0 +1,78 @@
+{
+  "id": "dream_catcher",
+  "name": "攝夢人",
+  "en_name": "Dream Catcher",
+  "initial_state": {
+    "faction": "VILLAGER",
+    "category": "GOD",
+    "win_condition": "ELIMINATE_ALL_WOLVES",
+    "seer_result": "VILLAGER"
+  },
+  "tags": [
+    "sleepwalk",
+    "night_immune_grant",
+    "link_death"
+  ],
+  "skill_description": "每晚必須選擇一名玩家成為「夢遊者」，夢遊者當晚免疫所有夜間傷害（包含狼刀與毒藥）。若攝夢人夜間死亡，夢遊者會隨之殉情；若連續兩晚選擇同一名玩家，該玩家會直接死亡。",
+  "skill_rules": [
+    "每晚必須選一名其他玩家成為夢遊者；沒選會隨機指定。",
+    "夢遊者當晚免疫狼人襲擊、毒藥與狩獵。",
+    "若你在夜裡死亡，夢遊者會一起死亡。",
+    "連續兩晚選同一個人，該玩家會直接死亡。"
+  ],
+  "actions": {
+    "night": true,
+    "day": false,
+    "passive": true,
+    "death_trigger": true
+  },
+  "resources": {},
+  "ability_refs": [],
+  "abilities": [
+    {
+      "id": "assign_sleepwalker",
+      "trigger": "NIGHT",
+      "execution": {
+        "phase": "NIGHT",
+        "priority": 25,
+        "resolution_timing": "BEFORE_DAMAGE",
+        "depends_on": [
+          "magician"
+        ]
+      },
+      "target": {
+        "count": 1,
+        "scope": "ALIVE_PLAYERS",
+        "allow_self": false,
+        "allow_dead": false
+      },
+      "effects": [
+        {
+          "type": "GRANT_NIGHT_IMMUNITY",
+          "against": [
+            "WOLF_ATTACK",
+            "WITCH_POISON",
+            "WITCH_HUNTER_HUNT"
+          ]
+        },
+        {
+          "type": "LINK_DEATH_IF_SELF_DIES_AT_NIGHT",
+          "cause": "DREAM_CATCHER_EFFECT"
+        },
+        {
+          "type": "KILL_IF_CONSECUTIVE_TARGET",
+          "cause": "DREAM_CATCHER_EFFECT"
+        }
+      ],
+      "restrictions": [
+        {
+          "type": "MANDATORY_ACTION"
+        }
+      ],
+      "usage_limit": -1
+    }
+  ],
+  "death_trigger": null,
+  "dynamic_rules": [],
+  "custom_data": {}
+}

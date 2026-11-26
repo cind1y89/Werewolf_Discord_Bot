@@ -1,0 +1,66 @@
+{
+  "id": "idiot",
+  "name": "白痴",
+  "en_name": "Idiot",
+  "initial_state": {
+    "faction": "VILLAGER",
+    "category": "GOD",
+    "win_condition": "ELIMINATE_ALL_WOLVES",
+    "seer_result": "VILLAGER"
+  },
+  "tags": [
+    "lose_vote_power",
+    "vote_immunity"
+  ],
+  "skill_description": "白天被投票放逐時，可翻牌自證「白痴」身分並免於被吊死（只能一次），該天就沒有人被放逐。翻牌後失去投票權，但仍可發言，之後若再被放逐就會出局。",
+  "skill_rules": [
+    "被放逐時可以翻牌免死（只有一次），那天沒有人被放逐。",
+    "翻牌後你仍然存活，仍可發言，但不能再投票（放逐投票與警長投票）。",
+    "翻牌後仍然可以被投票；再次被放逐時不能再免死，會正常出局。",
+    "被狼人殺死、被毒等其他死因，會正常死亡。"
+  ],
+  "actions": {
+    "night": false,
+    "day": true,
+    "passive": false,
+    "death_trigger": false
+  },
+  "resources": {},
+  "ability_refs": [],
+  "abilities": [
+    {
+      "id": "reveal_idiot_immunity",
+      "trigger": "DAY_VOTE",
+      "execution": {
+        "phase": "DAY_VOTE",
+        "priority": 10,
+        "resolution_timing": "IMMEDIATE",
+        "depends_on": []
+      },
+      "target": {
+        "count": 0,
+        "scope": "SELF",
+        "allow_self": true,
+        "allow_dead": false
+      },
+      "effects": [
+        {
+          "type": "CANCEL_EXILE"
+        },
+        {
+          "type": "REVEAL_ROLE"
+        },
+        {
+          "type": "SET_VOTE_RIGHTS",
+          "can_vote": false,
+          "can_be_voted": true
+        }
+      ],
+      "restrictions": [],
+      "usage_limit": 1
+    }
+  ],
+  "death_trigger": null,
+  "dynamic_rules": [],
+  "custom_data": {}
+}

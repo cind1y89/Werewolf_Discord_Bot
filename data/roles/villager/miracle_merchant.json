@@ -1,0 +1,71 @@
+{
+  "id": "miracle_merchant",
+  "name": "奇蹟商人",
+  "en_name": "Miracle Merchant",
+  "initial_state": {
+    "faction": "VILLAGER",
+    "category": "GOD",
+    "win_condition": "ELIMINATE_ALL_WOLVES",
+    "seer_result": "VILLAGER"
+  },
+  "tags": [
+    "grant_skill",
+    "risk_death"
+  ],
+  "skill_description": "整局遊戲限一次，在夜晚選擇一名玩家成為「幸運兒」，並給予其「查驗」、「毒藥」或「守護」其中一項一次性技能。若給予的對象是狼人，次日奇蹟商人直接出局且技能失效。",
+  "skill_rules": [
+    "整局只能用一次：夜晚選一名玩家當幸運兒，並選給他「查驗／毒藥／守護」其中一種一次性技能，他當晚就能使用。",
+    "若幸運兒是狼人，技能無效，你會在天亮時出局。",
+    "被夢魘恐懼的那晚不能使用。"
+  ],
+  "actions": {
+    "night": true,
+    "day": false,
+    "passive": false,
+    "death_trigger": false
+  },
+  "resources": {
+    "miracle_gift": {
+      "initial": 1,
+      "max": 1
+    }
+  },
+  "ability_refs": [],
+  "abilities": [
+    {
+      "id": "grant_lucky_skill",
+      "trigger": "NIGHT",
+      "resource": "miracle_gift",
+      "execution": {
+        "phase": "NIGHT",
+        "priority": 22,
+        "resolution_timing": "BEFORE_DAMAGE",
+        "depends_on": [
+          "magician"
+        ]
+      },
+      "target": {
+        "count": 1,
+        "scope": "ALIVE_PLAYERS",
+        "allow_self": false,
+        "allow_dead": false
+      },
+      "effects": [
+        {
+          "type": "GRANT_ONE_TIME_GIFT_OR_BACKFIRE",
+          "gift_options": [
+            "CHECK_FACTION",
+            "POISON",
+            "PROTECT"
+          ],
+          "backfire_cause": "MIRACLE_MERCHANT_BACKFIRE"
+        }
+      ],
+      "restrictions": [],
+      "usage_limit": 1
+    }
+  ],
+  "death_trigger": null,
+  "dynamic_rules": [],
+  "custom_data": {}
+}

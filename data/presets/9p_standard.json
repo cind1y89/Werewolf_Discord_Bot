@@ -1,0 +1,17 @@
+{
+  "id": "9p_standard",
+  "name": "9 人官方局：預女獵",
+  "players": 9,
+  "fill_role": "villager",
+  "roles": [
+    "werewolf",
+    "seer",
+    "werewolf",
+    "witch",
+    "werewolf",
+    "hunter",
+    "villager",
+    "villager",
+    "villager"
+  ]
+}

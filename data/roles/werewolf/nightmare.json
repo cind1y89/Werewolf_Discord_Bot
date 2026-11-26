@@ -1,0 +1,69 @@
+{
+  "id": "nightmare",
+  "name": "夢魘",
+  "en_name": "Nightmare",
+  "initial_state": {
+    "faction": "WEREWOLF",
+    "category": "SPECIAL_WOLF",
+    "win_condition": "SLAUGHTER_SIDE",
+    "seer_result": "WEREWOLF"
+  },
+  "tags": [
+    "fear",
+    "night_kill",
+    "first_to_wake"
+  ],
+  "skill_description": "每晚第一個單獨睜眼，恐懼一名玩家，使其當晚無法使用技能。不能恐懼自己，也不能連續兩晚恐懼同一人。若恐懼了狼隊友，狼隊當晚無法襲擊。之後與狼人一起行動，可以自爆。",
+  "skill_rules": [
+    "每晚第一個睜眼，恐懼一名其他玩家：對方當晚無法使用技能（也不會被叫醒）。",
+    "不能恐懼自己，也不能連續兩晚恐懼同一人。",
+    "若恐懼了狼人，狼隊當晚空刀（無法襲擊）。被恐懼的獵人當晚死亡，不能開槍。",
+    "之後與狼人一起襲擊，可以自爆。"
+  ],
+  "actions": {
+    "night": true,
+    "day": true,
+    "passive": false,
+    "death_trigger": false
+  },
+  "resources": {},
+  "ability_refs": [
+    "wolf_pack_attack",
+    "wolf_suicide"
+  ],
+  "abilities": [
+    {
+      "id": "fear_player",
+      "trigger": "NIGHT",
+      "execution": {
+        "phase": "NIGHT",
+        "priority": 0,
+        "resolution_timing": "PRE_ACTION",
+        "depends_on": []
+      },
+      "target": {
+        "count": 1,
+        "scope": "ALIVE_PLAYERS",
+        "allow_self": false,
+        "allow_dead": false
+      },
+      "effects": [
+        {
+          "type": "SEAL_TARGET_SKILLS_FOR_NIGHT"
+        }
+      ],
+      "restrictions": [
+        {
+          "type": "NO_CONSECUTIVE_TARGET",
+          "scope": "NIGHT"
+        }
+      ],
+      "usage_limit": -1
+    }
+  ],
+  "death_trigger": null,
+  "dynamic_rules": [],
+  "custom_data": {
+    "last_feared_player_id": null
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "wolf_pack_attack",
+  "trigger": "NIGHT",
+  "execution": {
+    "phase": "NIGHT",
+    "priority": 30,
+    "resolution_timing": "ON_DAMAGE",
+    "depends_on": [
+      "magician",
+      "cupid",
+      "wild_child"
+    ]
+  },
+  "target": {
+    "count": 1,
+    "scope": "ALIVE_PLAYERS",
+    "allow_self": true,
+    "allow_dead": false,
+    "vote_mode": "TEAM_CONSENSUS"
+  },
+  "effects": [
+    {
+      "type": "INFLICT_DEATH",
+      "cause": "WOLF_ATTACK"
+    }
+  ],
+  "restrictions": [],
+  "usage_limit": -1
+}

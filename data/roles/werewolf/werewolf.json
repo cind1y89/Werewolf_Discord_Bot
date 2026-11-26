@@ -1,0 +1,37 @@
+{
+  "id": "werewolf",
+  "name": "狼人",
+  "en_name": "Werewolf",
+  "initial_state": {
+    "faction": "WEREWOLF",
+    "category": "NORMAL_WOLF",
+    "win_condition": "SLAUGHTER_SIDE",
+    "seer_result": "WEREWOLF"
+  },
+  "tags": [
+    "night_kill",
+    "suicide",
+    "team_vision"
+  ],
+  "skill_description": "每晚與其他狼人睜眼確認彼此身分，並共同投票襲擊一名玩家。白天可隨時選擇自爆，直接結束當前白天階段並強制進入黑夜。",
+  "skill_rules": [
+    "每晚與狼人隊友一起睜眼，進入狼人頻道討論，各自投票選擇襲擊目標（可棄權）。",
+    "得票最多的目標被襲擊；平票時在平票的選項中隨機；沒人投票、或棄權最多，當晚不襲擊。",
+    "白天發言時可以自爆：立刻出局，直接進入黑夜，沒有遺言。"
+  ],
+  "actions": {
+    "night": true,
+    "day": true,
+    "passive": true,
+    "death_trigger": false
+  },
+  "resources": {},
+  "ability_refs": [
+    "wolf_pack_attack",
+    "wolf_suicide"
+  ],
+  "abilities": [],
+  "death_trigger": null,
+  "dynamic_rules": [],
+  "custom_data": {}
+}

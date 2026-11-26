@@ -1,0 +1,56 @@
+{
+  "id": "gravekeeper",
+  "name": "守墓人",
+  "en_name": "Gravekeeper",
+  "initial_state": {
+    "faction": "VILLAGER",
+    "category": "GOD",
+    "win_condition": "ELIMINATE_ALL_WOLVES",
+    "seer_result": "VILLAGER"
+  },
+  "tags": [
+    "exile_check",
+    "info_gatherer"
+  ],
+  "skill_description": "每晚可以睜眼得知前一個白天被投票放逐出局的玩家是「好人」還是「狼人」。",
+  "skill_rules": [
+    "每晚得知前一個白天被放逐的玩家是「好人」還是「狼人」。",
+    "若前一天沒有人被放逐（或沒有人死亡），就沒有結果。"
+  ],
+  "actions": {
+    "night": true,
+    "day": false,
+    "passive": false,
+    "death_trigger": false
+  },
+  "resources": {},
+  "ability_refs": [],
+  "abilities": [
+    {
+      "id": "check_previous_exiled_faction",
+      "trigger": "NIGHT",
+      "execution": {
+        "phase": "NIGHT",
+        "priority": 55,
+        "resolution_timing": "END_OF_NIGHT",
+        "depends_on": []
+      },
+      "target": {
+        "count": 0,
+        "scope": "PREVIOUS_DAY_EXILED_PLAYER",
+        "allow_self": false,
+        "allow_dead": true
+      },
+      "effects": [
+        {
+          "type": "REVEAL_EXILED_PLAYER_FACTION"
+        }
+      ],
+      "restrictions": [],
+      "usage_limit": -1
+    }
+  ],
+  "death_trigger": null,
+  "dynamic_rules": [],
+  "custom_data": {}
+}

@@ -1,0 +1,16 @@
+{
+  "id": "8p_doomsday",
+  "name": "8 人官方局：末日狂徒",
+  "players": 8,
+  "fill_role": "villager",
+  "roles": [
+    "werewolf",
+    "seer",
+    "werewolf",
+    "guard",
+    "werewolf",
+    "knight",
+    "villager",
+    "villager"
+  ]
+}

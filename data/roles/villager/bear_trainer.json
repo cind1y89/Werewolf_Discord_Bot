@@ -1,0 +1,60 @@
+{
+  "id": "bear_trainer",
+  "name": "訓熊師",
+  "en_name": "Bear Trainer",
+  "initial_state": {
+    "faction": "VILLAGER",
+    "category": "GOD",
+    "win_condition": "ELIMINATE_ALL_WOLVES",
+    "seer_result": "VILLAGER"
+  },
+  "tags": [
+    "info_gatherer",
+    "passive_check"
+  ],
+  "skill_description": "每晚自動感應自己左右相鄰的玩家（以存活玩家的座位計算，相鄰者出局就往下一位存活者算）。天亮後，系統在頻道宣布：有狼人就「熊咆哮了！」，沒有就「熊很安靜」；你死亡後宣布「熊不再咆哮了！」，此後不再宣告。",
+  "skill_rules": [
+    "不需要在夜晚行動，系統會自動判定。",
+    "「左右相鄰」以存活玩家的座位順序計算；相鄰者已出局，就往下一位存活者算。",
+    "狼人的判定同預言家：被預言家驗出是狼人的才算（隱狼、雪狼不算）。",
+    "魔術師當晚交換了號碼牌時，感應的是換位後實際左右相鄰的玩家。",
+    "被夢魘恐懼、被血月使徒封印的那晚，或鄰居的狼人被恐懼時，熊很安靜。",
+    "系統不公布熊是誰。你死亡後，宣布「熊不再咆哮了！」，之後不再宣告。"
+  ],
+  "actions": {
+    "night": false,
+    "day": false,
+    "passive": true,
+    "death_trigger": false
+  },
+  "resources": {},
+  "ability_refs": [],
+  "abilities": [
+    {
+      "id": "bear_growl",
+      "trigger": "DAWN",
+      "execution": {
+        "phase": "DAWN",
+        "priority": 0,
+        "resolution_timing": "END_OF_NIGHT",
+        "depends_on": []
+      },
+      "target": {
+        "count": 2,
+        "scope": "ADJACENT_ALIVE_PLAYERS",
+        "allow_self": false,
+        "allow_dead": false
+      },
+      "effects": [
+        {
+          "type": "CHECK_NEIGHBORS_FOR_WOLF"
+        }
+      ],
+      "restrictions": [],
+      "usage_limit": -1
+    }
+  ],
+  "death_trigger": null,
+  "dynamic_rules": [],
+  "custom_data": {}
+}

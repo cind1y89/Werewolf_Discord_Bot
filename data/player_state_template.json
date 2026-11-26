@@ -1,0 +1,17 @@
+{
+  "player_id": null,
+  "role_id": null,
+  "faction": null,
+  "win_condition": null,
+  "seer_result": null,
+  "is_alive": true,
+  "delayed_death_cause": null,
+  "delayed_death_until_phase": null,
+  "is_revealed": false,
+  "can_vote": true,
+  "can_be_voted": true,
+  "is_ability_sealed": false,
+  "status_effects": [],
+  "resources": {},
+  "custom_state": {}
+}

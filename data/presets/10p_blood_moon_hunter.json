@@ -1,0 +1,18 @@
+{
+  "id": "10p_blood_moon_hunter",
+  "name": "10 人官方局：血月獵魔",
+  "players": 10,
+  "fill_role": "villager",
+  "roles": [
+    "werewolf",
+    "seer",
+    "werewolf",
+    "witch",
+    "blood_moon_apostle",
+    "witch_hunter",
+    "idiot",
+    "villager",
+    "villager",
+    "villager"
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "id": "gargoyle",
+  "name": "石像鬼",
+  "en_name": "Gargoyle",
+  "initial_state": {
+    "faction": "WEREWOLF",
+    "category": "SOLO_WOLF",
+    "win_condition": "SLAUGHTER_SIDE",
+    "seer_result": "WEREWOLF"
+  },
+  "tags": [
+    "solo_wolf",
+    "exact_check",
+    "no_suicide"
+  ],
+  "skill_description": "夜晚不與其他狼人睜眼相認或討論殺人（其他狼人也不知道你是誰）。第一夜單獨睜眼，查驗一名玩家的具體身分。其他狼人全部出局後，你接管襲擊的能力，之後每晚可以先查驗再襲擊。不可自爆，但可以自刀。",
+  "skill_rules": [
+    "不與狼人見面；第一夜單獨睜眼，查驗一名其他玩家的具體角色（不只是陣營）。",
+    "其他狼人全部出局後，你才獲得夜晚襲擊的能力；從那晚起，每晚先查驗一名玩家，再選擇襲擊目標。",
+    "預言家會查驗你為「狼人」。不能自爆，但可以自刀。"
+  ],
+  "actions": {
+    "night": true,
+    "day": false,
+    "passive": false,
+    "death_trigger": false
+  },
+  "resources": {},
+  "ability_refs": [],
+  "abilities": [
+    {
+      "id": "exact_role_check",
+      "trigger": "NIGHT",
+      "execution": {
+        "phase": "NIGHT",
+        "priority": 8.5,
+        "resolution_timing": "END_OF_NIGHT",
+        "depends_on": [
+          "magician"
+        ]
+      },
+      "target": {
+        "count": 1,
+        "scope": "ALIVE_PLAYERS",
+        "allow_self": false,
+        "allow_dead": false
+      },
+      "effects": [
+        {
+          "type": "REVEAL_EXACT_ROLE"
+        }
+      ],
+      "restrictions": [],
+      "usage_limit": -1,
+      "active_when": "FIRST_NIGHT_OR_LAST_WOLF"
+    }
+  ],
+  "death_trigger": null,
+  "dynamic_rules": [
+    {
+      "trigger": "LAST_WOLF_STANDING",
+      "effects": [
+        {
+          "type": "GRANT_ABILITY",
+          "ability_id": "wolf_pack_attack"
+        }
+      ]
+    }
+  ],
+  "custom_data": {}
+}

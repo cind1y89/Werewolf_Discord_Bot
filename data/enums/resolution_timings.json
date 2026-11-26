@@ -1,0 +1,8 @@
+[
+  "PRE_ACTION",
+  "BEFORE_DAMAGE",
+  "ON_DAMAGE",
+  "AFTER_DAMAGE",
+  "END_OF_NIGHT",
+  "IMMEDIATE"
+]

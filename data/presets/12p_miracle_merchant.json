@@ -1,0 +1,25 @@
+{
+  "id": "12p_miracle_merchant",
+  "name": "12 人官方局：奇蹟商人",
+  "players": 12,
+  "fill_role": "villager",
+  "roles": [
+    "werewolf",
+    "seer",
+    "werewolf",
+    "witch",
+    "werewolf",
+    "guard",
+    "wolf_king",
+    "idiot",
+    "miracle_merchant",
+    "villager",
+    "villager",
+    "villager"
+  ],
+  "rules": {
+    "witch_first_night_self_heal": false,
+    "witch_later_nights_self_heal": false
+  },
+  "note": "原文配置未列奇蹟商人與狼王（但技能與夜間順序有）。這裡依此推斷：把 1 個平民換成奇蹟商人、1 個狼人換成狼王。"
+}

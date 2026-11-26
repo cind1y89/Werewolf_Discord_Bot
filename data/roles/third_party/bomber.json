@@ -1,0 +1,62 @@
+{
+  "id": "bomber",
+  "name": "炸彈人",
+  "en_name": "Bomber",
+  "initial_state": {
+    "faction": "THIRD_PARTY",
+    "category": "NEUTRAL",
+    "win_condition": "BOMB_ALL",
+    "seer_result": "VILLAGER"
+  },
+  "tags": [
+    "third_party",
+    "bomb",
+    "blocks_victory"
+  ],
+  "skill_description": "第三方陣營。白天被投票放逐出局後，可以發動技能，殺死所有投票給你的玩家。若你一次炸死所有存活的玩家，你單獨獲勝。",
+  "skill_rules": [
+    "只有「被放逐投票出局」才會爆炸，炸死所有投票給你的玩家（包含警長）。",
+    "被狼人殺死、被毒死、被獵人槍殺、殉情死亡時，不會爆炸。",
+    "若你炸死了所有存活的玩家，你單獨獲勝。",
+    "只要你還活著，好人與狼人都不算獲勝（要先把你處理掉）。"
+  ],
+  "actions": {
+    "night": false,
+    "day": false,
+    "passive": false,
+    "death_trigger": true
+  },
+  "resources": {},
+  "ability_refs": [],
+  "abilities": [],
+  "death_trigger": {
+    "trigger_mode": "ALL",
+    "allowed_causes": [
+      "VOTE_EXILE"
+    ],
+    "forbidden_causes": [
+      "WITCH_POISON",
+      "HUNTER_SHOT",
+      "WOLF_ATTACK",
+      "LOVER_LINK"
+    ],
+    "execution": {
+      "phase": "IMMEDIATE",
+      "priority": 90,
+      "resolution_timing": "AFTER_DAMAGE",
+      "depends_on": []
+    },
+    "target": {
+      "count": 0,
+      "scope": "VOTERS_FOR_SELF",
+      "allow_self": false,
+      "allow_dead": false
+    },
+    "effect": {
+      "type": "KILL_VOTERS",
+      "cause": "BOMBER_EXPLODE"
+    }
+  },
+  "dynamic_rules": [],
+  "custom_data": {}
+}

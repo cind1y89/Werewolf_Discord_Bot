@@ -1,0 +1,44 @@
+{
+  "id": "hidden_wolf",
+  "name": "隱狼",
+  "en_name": "Hidden Wolf",
+  "initial_state": {
+    "faction": "WEREWOLF",
+    "category": "SOLO_WOLF",
+    "win_condition": "SLAUGHTER_SIDE",
+    "seer_result": "VILLAGER"
+  },
+  "tags": [
+    "solo_wolf",
+    "stealth",
+    "no_suicide"
+  ],
+  "skill_description": "不與其他狼人共同睜眼（但知道誰是隊友），預言家查驗時顯示為「好人」。只有當其他所有狼人出局後，隱狼才會在夜晚睜眼執行襲擊。不可自爆。",
+  "skill_rules": [
+    "不與狼人一起睜眼，也沒有夜晚技能。",
+    "預言家查驗你會顯示為「好人」。",
+    "其他狼人全部出局後，你才獲得夜晚襲擊的能力。不能自爆。"
+  ],
+  "actions": {
+    "night": false,
+    "day": false,
+    "passive": true,
+    "death_trigger": false
+  },
+  "resources": {},
+  "ability_refs": [],
+  "abilities": [],
+  "death_trigger": null,
+  "dynamic_rules": [
+    {
+      "trigger": "LAST_WOLF_STANDING",
+      "effects": [
+        {
+          "type": "GRANT_ABILITY",
+          "ability_id": "wolf_pack_attack"
+        }
+      ]
+    }
+  ],
+  "custom_data": {}
+}

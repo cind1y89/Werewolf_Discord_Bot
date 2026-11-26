@@ -1,0 +1,68 @@
+{
+  "id": "knight",
+  "name": "騎士",
+  "en_name": "Knight",
+  "initial_state": {
+    "faction": "VILLAGER",
+    "category": "GOD",
+    "win_condition": "ELIMINATE_ALL_WOLVES",
+    "seer_result": "VILLAGER"
+  },
+  "tags": [
+    "day_duel",
+    "reveal_role"
+  ],
+  "skill_description": "在白天放逐投票前的發言階段，可以隨時翻牌發動決鬥，指定決鬥場上一名玩家。若對方是狼人，該狼人立即出局並直接進入黑夜；若對方是好人，則騎士自己以死謝罪，白天繼續進行。",
+  "skill_rules": [
+    "白天發言時可以翻牌，向一名玩家決鬥（只有一次）。",
+    "對方是狼人：狼人出局（沒有遺言），直接進入黑夜。對方是好人：你出局，白天繼續，你仍有遺言。",
+    "因決鬥出局的人不能開槍。"
+  ],
+  "actions": {
+    "night": false,
+    "day": true,
+    "passive": false,
+    "death_trigger": false
+  },
+  "resources": {},
+  "ability_refs": [],
+  "abilities": [
+    {
+      "id": "day_duel_action",
+      "trigger": "DAY_SPEECH",
+      "execution": {
+        "phase": "DAY_SPEECH",
+        "priority": 20,
+        "resolution_timing": "IMMEDIATE",
+        "depends_on": []
+      },
+      "target": {
+        "count": 1,
+        "scope": "ALIVE_PLAYERS",
+        "allow_self": false,
+        "allow_dead": false
+      },
+      "effects": [
+        {
+          "type": "REVEAL_ROLE"
+        },
+        {
+          "type": "DUEL_RESOLVE",
+          "on_target_wolf": {
+            "kill_target_cause": "KNIGHT_DUEL",
+            "transition_to": "NIGHT"
+          },
+          "on_target_non_wolf": {
+            "kill_self_cause": "KNIGHT_DUEL",
+            "transition_to": "CONTINUE_DAY"
+          }
+        }
+      ],
+      "restrictions": [],
+      "usage_limit": 1
+    }
+  ],
+  "death_trigger": null,
+  "dynamic_rules": [],
+  "custom_data": {}
+}

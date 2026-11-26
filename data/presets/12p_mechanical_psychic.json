@@ -1,0 +1,24 @@
+{
+  "id": "12p_mechanical_psychic",
+  "name": "12 人特殊局：機械通靈",
+  "players": 12,
+  "fill_role": "villager",
+  "roles": [
+    "werewolf",
+    "psychic",
+    "werewolf",
+    "witch",
+    "werewolf",
+    "hunter",
+    "mechanical_wolf",
+    "guard",
+    "villager",
+    "villager",
+    "villager",
+    "villager"
+  ],
+  "rules": {
+    "witch_first_night_self_heal": false,
+    "witch_later_nights_self_heal": false
+  }
+}

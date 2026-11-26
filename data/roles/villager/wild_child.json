@@ -1,0 +1,87 @@
+{
+  "id": "wild_child",
+  "name": "野孩子",
+  "en_name": "Wild Child",
+  "initial_state": {
+    "faction": "VILLAGER",
+    "category": "SPECIAL_VILLAGER",
+    "win_condition": "ELIMINATE_ALL_WOLVES",
+    "seer_result": "VILLAGER"
+  },
+  "tags": [
+    "role_model",
+    "faction_shift",
+    "first_night_only"
+  ],
+  "skill_description": "首夜睜眼選擇場上一名玩家作為「榜樣」，初期屬於好人陣營。若榜樣因為被投票放逐而死亡，野孩子就變成狼人陣營，並在夜晚加入狼人的殺人討論；若榜樣活著（或死於其他原因），野孩子一直是好人。",
+  "skill_rules": [
+    "第一晚選一名其他玩家作為榜樣。",
+    "榜樣因為「被放逐投票」出局時，你立刻變成狼人：加入狼人夜晚行動，並依狼人陣營的勝利條件。",
+    "榜樣死於其他原因（被殺、毒、槍殺等），你仍然是好人。",
+    "榜樣還活著時，你一直是好人。"
+  ],
+  "actions": {
+    "night": true,
+    "day": false,
+    "passive": true,
+    "death_trigger": false
+  },
+  "resources": {},
+  "ability_refs": [],
+  "abilities": [
+    {
+      "id": "choose_role_model",
+      "trigger": "FIRST_NIGHT",
+      "execution": {
+        "phase": "FIRST_NIGHT",
+        "priority": 8,
+        "resolution_timing": "PRE_ACTION",
+        "depends_on": [
+          "thief",
+          "cupid"
+        ]
+      },
+      "target": {
+        "count": 1,
+        "scope": "ALIVE_PLAYERS",
+        "allow_self": false,
+        "allow_dead": false
+      },
+      "effects": [
+        {
+          "type": "SET_ROLE_MODEL"
+        }
+      ],
+      "restrictions": [],
+      "usage_limit": 1
+    }
+  ],
+  "death_trigger": null,
+  "dynamic_rules": [
+    {
+      "trigger": "ROLE_MODEL_DIED",
+      "effects": [
+        {
+          "type": "CHANGE_FACTION",
+          "faction": "WEREWOLF"
+        },
+        {
+          "type": "SET_WIN_CONDITION",
+          "win_condition": "SLAUGHTER_SIDE"
+        },
+        {
+          "type": "SET_SEER_RESULT",
+          "seer_result": "WEREWOLF"
+        },
+        {
+          "type": "GRANT_ABILITY",
+          "ability_id": "wolf_pack_attack"
+        }
+      ],
+      "only_causes": [
+        "VOTE_EXILE"
+      ]
+    }
+  ],
+  "custom_data": {}
+}

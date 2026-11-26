@@ -1,0 +1,66 @@
+{
+  "id": "old_rogue",
+  "name": "老流氓",
+  "en_name": "Old Rogue",
+  "initial_state": {
+    "faction": "VILLAGER",
+    "category": "CITIZEN",
+    "win_condition": "ELIMINATE_ALL_WOLVES",
+    "seer_result": "VILLAGER"
+  },
+  "tags": [
+    "delayed_death",
+    "charm_immune"
+  ],
+  "skill_description": "平民，沒有主動技能。被動能力：不會被狼美人魅惑；被女巫毒殺或被獵人槍殺後不會立刻死亡，白天還可以繼續發言，直到進入夜晚才死亡。",
+  "skill_rules": [
+    "沒有主動技能，夜晚不需要行動。",
+    "狼美人的魅惑對你無效（你不會因為狼美人死亡而殉情）。",
+    "被女巫毒殺或被獵人（狼王）槍殺時，不會立刻死亡：那一天你還活著，可以發言、投票，天黑時才死亡。",
+    "被狼人襲擊、放逐等其他死因，會正常死亡。"
+  ],
+  "actions": {
+    "night": false,
+    "day": false,
+    "passive": true,
+    "death_trigger": false
+  },
+  "resources": {},
+  "ability_refs": [],
+  "abilities": [
+    {
+      "id": "old_rogue_passive",
+      "trigger": "PASSIVE",
+      "execution": {
+        "phase": "NIGHT",
+        "priority": 5,
+        "resolution_timing": "BEFORE_DAMAGE",
+        "depends_on": []
+      },
+      "target": {
+        "count": 0,
+        "scope": "SELF",
+        "allow_self": true,
+        "allow_dead": false
+      },
+      "effects": [
+        {
+          "type": "IMMUNE_CHARM"
+        },
+        {
+          "type": "DELAY_DEATH_UNTIL_NIGHT",
+          "causes": [
+            "WITCH_POISON",
+            "HUNTER_SHOT",
+            "WOLF_KING_SHOT"
+          ]
+        }
+      ],
+      "restrictions": [],
+      "usage_limit": -1
+    }
+  ],
+  "death_trigger": null,
+  "dynamic_rules": [],
+  "custom_data": {}
+}

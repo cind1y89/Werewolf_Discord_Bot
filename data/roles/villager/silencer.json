@@ -1,0 +1,69 @@
+{
+  "tags": [
+    "silence",
+    "info_control"
+  ],
+  "actions": {
+    "night": true,
+    "day": false,
+    "passive": false,
+    "death_trigger": false
+  },
+  "resources": {},
+  "ability_refs": [],
+  "abilities": [
+    {
+      "id": "silence_player",
+      "trigger": "NIGHT",
+      "execution": {
+        "phase": "NIGHT",
+        "priority": 27,
+        "resolution_timing": "PRE_ACTION",
+        "depends_on": [
+          "magician"
+        ]
+      },
+      "target": {
+        "count": 1,
+        "scope": "ALIVE_PLAYERS",
+        "allow_self": false,
+        "allow_dead": false
+      },
+      "effects": [
+        {
+          "type": "SILENCE_NEXT_DAY"
+        }
+      ],
+      "restrictions": [
+        {
+          "type": "NO_CONSECUTIVE_TARGET",
+          "scope": "NIGHT"
+        }
+      ],
+      "usage_limit": -1
+    }
+  ],
+  "death_trigger": null,
+  "dynamic_rules": [],
+  "custom_data": {
+    "last_silenced_player_id": null
+  },
+  "id": "silencer",
+  "name": "禁言長老",
+  "en_name": "Silencer",
+  "initial_state": {
+    "faction": "VILLAGER",
+    "category": "GOD",
+    "win_condition": "ELIMINATE_ALL_WOLVES",
+    "seer_result": "VILLAGER"
+  },
+  "skill_description": "每晚可以指定一名玩家禁言（也可以不發動）。被禁言的玩家隔天白天不能發言，但仍然可以正常投票。",
+  "skill_rules": [
+    "每晚可以禁言一名其他玩家，或選擇不發動技能（那天就沒有人被禁言）。",
+    "不能禁言自己，也不能連續兩晚禁言同一人。",
+    "被禁言的玩家隔天白天不能發言（輪到他時會被跳過）",
+    "被禁言的玩家仍可正常投票（放逐投票與警長投票）；被禁言的警長仍可行使投票權。",
+    "被禁言者當晚死亡仍可正常留下遺言；被禁言的預言家仍可正常查驗；被禁言的狼人仍可參與夜晚行動。",
+    "你死亡後，已發動的禁言仍然生效。被夢魘恐懼的那晚不能禁言。"
+  ]
+}
