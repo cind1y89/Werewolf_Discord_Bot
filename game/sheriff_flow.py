@@ -74,7 +74,7 @@ async def signup(game: Game) -> list[Player]:
         waiting = [p for p in living if p.id in view.waiting]
         if waiting:
             await game.channel.send(f"{ping(waiting)} ⏰ 上警報名剩 **{left} 秒**，還沒選的請盡快選擇。")
-            await beep(game, game.voice_channel)
+            await beep(game, game.voice_channel, left)
     warn = start_warnings(config.SHERIFF_SIGNUP_SECONDS, remind)
     try:
         try:
@@ -120,7 +120,7 @@ class CampaignView(discord.ui.View):
 def speech_reminder(game: Game, player: Player):
     async def send(left: int) -> None:
         await game.channel.send(f"{player.member.mention} ⏰ 發言剩 **{left} 秒**。")
-        await beep(game, game.voice_channel)
+        await beep(game, game.voice_channel, left)
     return send
 
 
@@ -201,7 +201,7 @@ async def withdraw_window(game: Game, candidates: list[Player], withdrawn: set[i
         waiting = [c for c in remaining if c.id in view.waiting]
         if waiting:
             await game.channel.send(f"{ping(waiting)} ⏰ 退水時間剩 **{left} 秒**。")
-            await beep(game, game.voice_channel)
+            await beep(game, game.voice_channel, left)
     warn = start_warnings(config.SHERIFF_WITHDRAW_SECONDS, remind)
     try:
         try:
@@ -345,7 +345,7 @@ async def speaking_order_today(game: Game) -> list[Player] | None:
             f"請在 {countdown(config.SHERIFF_DIRECTION_SECONDS)} 前選擇，不選擇隨機。", view=view)
         async def remind(left: int) -> None:
             await game.channel.send(f"{sheriff.member.mention} ⏰ 選擇發言順序剩 **{left} 秒**，不選就隨機。")
-            await beep(game, game.voice_channel)
+            await beep(game, game.voice_channel, left)
         warn = start_warnings(config.SHERIFF_DIRECTION_SECONDS, remind)
         try:
             await asyncio.wait_for(view.event.wait(), timeout=config.SHERIFF_DIRECTION_SECONDS)

@@ -58,7 +58,7 @@ def speech_reminder(game: Game, player: Player):
     """The reminder sent to the speaker 30 and 10 seconds before their speaking time ends."""
     async def send(left: int) -> None:
         await game.channel.send(f"{player.member.mention} ⏰ 發言剩 **{left} 秒**。")
-        await beep(game, game.voice_channel)
+        await beep(game, game.voice_channel, left)
     return send
 
 

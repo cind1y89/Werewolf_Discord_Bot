@@ -736,15 +736,15 @@ async def wait_for_actors(prompt: Prompt, fakes: list, seconds: float, public: b
         text = f"⏰ 剩 **{left} 秒**！還沒行動的請盡快按「行動」。"
         if public:
             await game.channel.send(f"{ping(waiting)} {text}")
-            await beep(game, game.voice_channel)  # the day: everybody is in the main voice channel
+            await beep(game, game.voice_channel, left)  # the day: everybody is in the main voice channel
         elif prompt.turn.key == "wolves" and game.wolf_voice:
             await game.wolf_voice.send(f"{ping(waiting)} {text}")
-            await beep(game, game.wolf_voice)
+            await beep(game, game.wolf_voice, left)
         else:
             for actor in waiting:
                 channel = game.private_channels.get(actor.id) or game.channel
                 await channel.send(f"{actor.member.mention} {text}")
-            await beep(game, game.private_channels.get(waiting[0].id))  # at night: the channel of whoever is acting
+            await beep(game, game.private_channels.get(waiting[0].id), left)  # at night: the channel of whoever is acting
 
     async def everyone():
         await asyncio.gather(prompt.event.wait(), *fakes)
