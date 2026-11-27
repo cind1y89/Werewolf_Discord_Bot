@@ -41,10 +41,9 @@ def tally_exile(votes: dict[int, int | None], valid_ids: list[int],
                 bonus: dict[int, float] | None = None) -> tuple[int | None, dict]:
     """Returns (exiled player id or None, counts).
 
-    Self-votes are ignored. Rule: a player is exiled only if they have strictly more votes than every other player
-    AND strictly more than the abstain votes. A tie between players, a tie with abstain,
-    an abstain majority, or no votes at all means nobody is exiled. When players tie for first
-    place with more votes than abstain, detail["tied"] lists them: that is the 平票PK case.
+    Self-votes are ignored. Abstain votes are not looked at. Only the votes for players count: the player
+    with the most votes is exiled; if two or more players share the most votes (any number of them),
+    detail["tied"] lists them and that is the 平票PK case; with no votes for anyone, nobody is exiled.
     `bonus` adds extra votes to chosen players (the crow's curse)."""
     weights = weights or {}  # the sheriff's vote counts 1.5, everyone else 1
     counts: dict[int, float] = {}
@@ -65,9 +64,8 @@ def tally_exile(votes: dict[int, int | None], valid_ids: list[int],
         return None, detail
     top = max(counts.values())
     leaders = [t for t, c in counts.items() if c == top]
-    if top > abstain and len(leaders) > 1:
-        detail["tied"] = leaders  # a tie for first place between players: 平票PK
-    if len(leaders) != 1 or top <= abstain:
+    if len(leaders) > 1:
+        detail["tied"] = leaders  # a tie for first place between players: 平票PK, however many are tied
         return None, detail
     return leaders[0], detail
 

@@ -12,7 +12,8 @@ from . import day as D
 from . import night as N
 from . import sheriff as S
 from .models import Game, Player
-from .night_flow import collect, countdown, lock_voice, ping, say
+from .night_flow import collect, countdown, lock_voice, ping, say, start_warnings, stop_warnings
+from .sound import beep
 from .win import evaluate
 
 
@@ -69,12 +70,19 @@ async def signup(game: Game) -> list[Player]:
     for p in living:  # bots decide for themselves
         if p.is_fake:
             view.choices[p.id] = random.random() < 0.35
+    async def remind(left: int) -> None:
+        waiting = [p for p in living if p.id in view.waiting]
+        if waiting:
+            await game.channel.send(f"{ping(waiting)} ⏰ 上警報名剩 **{left} 秒**，還沒選的請盡快選擇。")
+            await beep(game, game.voice_channel)
+    warn = start_warnings(config.SHERIFF_SIGNUP_SECONDS, remind)
     try:
         try:
             await asyncio.wait_for(view.event.wait(), timeout=config.SHERIFF_SIGNUP_SECONDS)
         except asyncio.TimeoutError:
             pass
     finally:
+        stop_warnings(warn)
         view.stop()
         await msg.edit(content="🎖️ 警長競選報名結束。", view=None)
     return [p for p in sorted(living, key=lambda p: p.seat) if view.choices.get(p.id)]
@@ -109,6 +117,13 @@ class CampaignView(discord.ui.View):
         await interaction.response.send_message("你已退水，不再競選警長。", ephemeral=True)
 
 
+def speech_reminder(game: Game, player: Player):
+    async def send(left: int) -> None:
+        await game.channel.send(f"{player.member.mention} ⏰ 發言剩 **{left} 秒**。")
+        await beep(game, game.voice_channel)
+    return send
+
+
 async def campaign(game: Game, speakers: list[Player], withdrawn: set[int], can_withdraw: bool = True,
                    title: str = "🎤 警上發言") -> None:
     """Each candidate speaks in turn with the usual speaking time."""
@@ -124,6 +139,7 @@ async def campaign(game: Game, speakers: list[Player], withdrawn: set[int], can_
         msg = await game.channel.send(
             f"{speaker.member.mention} {title}（{seat_label(game, speaker.id)}）\n{timing}。"
             + ("若不想競選了可以按「退水」。" if can_withdraw else ""), view=view)
+        warn = None if speaker.is_fake else start_warnings(game.speak_seconds, speech_reminder(game, speaker))
         try:
             if speaker.is_fake:
                 await asyncio.sleep(random.uniform(*config.FAKE_ACT_DELAY))
@@ -135,6 +151,7 @@ async def campaign(game: Game, speakers: list[Player], withdrawn: set[int], can_
                 except asyncio.TimeoutError:
                     pass
         finally:
+            stop_warnings(warn)
             view.stop()
             await lock_voice(game, set())
             done = "退水了" if speaker.id in withdrawn else "發言結束"
@@ -180,12 +197,19 @@ async def withdraw_window(game: Game, candidates: list[Player], withdrawn: set[i
     for c in remaining:
         if c.is_fake and random.random() < 0.15:
             withdrawn.add(c.id)
+    async def remind(left: int) -> None:
+        waiting = [c for c in remaining if c.id in view.waiting]
+        if waiting:
+            await game.channel.send(f"{ping(waiting)} ⏰ 退水時間剩 **{left} 秒**。")
+            await beep(game, game.voice_channel)
+    warn = start_warnings(config.SHERIFF_WITHDRAW_SECONDS, remind)
     try:
         try:
             await asyncio.wait_for(view.event.wait(), timeout=config.SHERIFF_WITHDRAW_SECONDS)
         except asyncio.TimeoutError:
             pass
     finally:
+        stop_warnings(warn)
         view.stop()
         await msg.edit(content="🏳️ 退水結束。", view=None)
 
@@ -319,10 +343,16 @@ async def speaking_order_today(game: Game) -> list[Player] | None:
         msg = await game.channel.send(
             f"{sheriff.member.mention} 🎖️ **警長，請決定今天的發言順序**（你最後發言）\n"
             f"請在 {countdown(config.SHERIFF_DIRECTION_SECONDS)} 前選擇，不選擇隨機。", view=view)
+        async def remind(left: int) -> None:
+            await game.channel.send(f"{sheriff.member.mention} ⏰ 選擇發言順序剩 **{left} 秒**，不選就隨機。")
+            await beep(game, game.voice_channel)
+        warn = start_warnings(config.SHERIFF_DIRECTION_SECONDS, remind)
         try:
             await asyncio.wait_for(view.event.wait(), timeout=config.SHERIFF_DIRECTION_SECONDS)
         except asyncio.TimeoutError:
             pass
+        finally:
+            stop_warnings(warn)
         view.stop()
         await msg.edit(content="🎖️ 警長已決定發言順序。", view=None)
         direction = view.choice or S.random_direction()

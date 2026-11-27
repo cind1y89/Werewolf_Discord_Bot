@@ -25,6 +25,7 @@ A Discord bot that hosts a game of Werewolf (狼人殺) in a text with voice cha
 - Remove admin permissions(管理者) from everyone in the Discord teams(Expect the Team Creator). For the better game experience
 
 - For the bot, set the permission for
+
    一般權限 
    - 檢視頻道
    - 管理頻道
@@ -40,6 +41,7 @@ A Discord bot that hosts a game of Werewolf (狼人殺) in a text with voice cha
    語音頻道權限 
    - 連接
    - 說話
+   - 使用音效版
    - 使用語音活動
    - 將成員靜音
    - 將成員拒聽
@@ -59,7 +61,7 @@ A Discord bot that hosts a game of Werewolf (狼人殺) in a text with voice cha
 
 Or without activating: `./.venv/bin/python bot.py`. The console prints `Bot 已上線：<name>` when it is connected.
 
-If Python is upgraded (for example by Homebrew), the venv breaks. Delete `.venv` and repeat step 2.
+If Python is upgraded (for example by Homebrew), the venv breaks. Delete `.venv` and repeat step 
 
 ## How to play
 

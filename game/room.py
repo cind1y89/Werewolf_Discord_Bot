@@ -110,6 +110,8 @@ async def setup_room(game: Game) -> list[str]:
 
 async def teardown_room(game: Game) -> None:
     """Undo setup_room. Safe to call at any point; each step is independent."""
+    from .sound import leave
+    await leave(game)  # the soundboard bot leaves the voice channel before the channels are removed
     for uid in list(game.changed_nicks):
         member = game.players[uid].member if uid in game.players else None
         if member:

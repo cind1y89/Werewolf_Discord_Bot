@@ -11,9 +11,10 @@ from . import day as D
 from . import night as N
 from .deaths import apply_deaths
 from .models import Game, Player
-from .night_flow import OwnedView, PickSelect, collect, countdown, lock_voice, say
+from .night_flow import OwnedView, PickSelect, collect, countdown, lock_voice, say, start_warnings, stop_warnings
 from .room import gather_players, move_wolves, refresh_cards
 from .sheriff import weights as sheriff_weights
+from .sound import beep
 from .sheriff_flow import run_election, settle_badge, speaking_order_today
 from .win import Outcome, evaluate
 
@@ -53,6 +54,14 @@ async def shots_for(game: Game, deaths: list[tuple[int, list[str]]], tag: str,
     return extra
 
 
+def speech_reminder(game: Game, player: Player):
+    """The reminder sent to the speaker 30 and 10 seconds before their speaking time ends."""
+    async def send(left: int) -> None:
+        await game.channel.send(f"{player.member.mention} ⏰ 發言剩 **{left} 秒**。")
+        await beep(game, game.voice_channel)
+    return send
+
+
 # ---------------------------------------------------------------- last words
 async def last_words(game: Game, ids: list[int]) -> None:
     """遺言: each of these (dead) players speaks once, in seat order, with the usual speaking time.
@@ -66,6 +75,7 @@ async def last_words(game: Game, ids: list[int]) -> None:
         timing = f"請在 {countdown(game.speak_seconds)} 前說完" if game.speak_seconds else "不限時，說完請按「跳過」"
         msg = await game.channel.send(
             f"{player.member.mention} 🕯️ **遺言**（{name}）\n你出局了，這是你最後一次發言。{timing}。", view=view)
+        warn = None if player.is_fake else start_warnings(game.speak_seconds, speech_reminder(game, player))
         try:
             if player.is_fake:
                 await asyncio.sleep(random.uniform(*config.FAKE_ACT_DELAY))
@@ -75,6 +85,7 @@ async def last_words(game: Game, ids: list[int]) -> None:
                 except asyncio.TimeoutError:
                     pass
         finally:
+            stop_warnings(warn)
             view.stop()
             game.dead_may_speak.discard(pid)
             await lock_voice(game, set())
@@ -280,6 +291,7 @@ async def run_speeches(game: Game, order: list[Player] | None = None,
                 deadline = loop.time() + game.speak_seconds if game.speak_seconds else None
             bot_skill(game, speech)
             ended = outcome = None
+            warn = None if speaker.is_fake else start_warnings(game.speak_seconds, speech_reminder(game, speaker))
             try:
                 while speaker.state["is_alive"]:
                     waiters = {asyncio.ensure_future(view.event.wait()), asyncio.ensure_future(speech.queue.get())}
@@ -301,6 +313,7 @@ async def run_speeches(game: Game, order: list[Player] | None = None,
                     if speaker.state["is_alive"]:
                         await lock_voice(game, {speaker.id})  # last words muted them again
             finally:
+                stop_warnings(warn)
                 view.stop()
                 await lock_voice(game, set())  # muted again at once, on skip, timeout or cancel
             await msg.edit(content=f"🎤 {name} 發言結束。", view=None)

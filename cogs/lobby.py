@@ -663,6 +663,7 @@ class Lobby(commands.Cog):
         data = self.bot.game_data
         game = Game(interaction.user, channel_id, data)
         game.guild, game.channel = interaction.guild, interaction.channel
+        game.client = interaction.client
         game.voice_channel = getattr(interaction.user.voice, "channel", None)  # voice is used if the host is in one
         if board == CUSTOM:
             game.config_mode, game.role_list = "custom", default_roles(6)

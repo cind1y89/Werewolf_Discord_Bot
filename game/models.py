@@ -113,6 +113,7 @@ class Game:
         self.last_vote_record: dict[int, int | None] = {}  # who voted for whom in the latest exile vote
         self.feared_last_night: set[int] = set()  # the nightmare's targets: a feared hunter cannot shoot at dawn
         self.sealed_tonight = False  # blood moon apostle sealed the gods for the coming night
+        self.client = None  # the bot (to look up soundboard sounds)
         self.lobby_message = None  # the lobby message holding the card button
         self.on_end = None  # callback that frees the channel for a new game
 

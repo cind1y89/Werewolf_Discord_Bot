@@ -11,6 +11,7 @@ from . import config
 from . import night as N
 from .models import Game, Player
 from .room import isolate_players, move_wolves, refresh_cards, set_voice
+from .sound import beep
 
 
 def opt_label(p: Player) -> str:
@@ -26,6 +27,32 @@ def countdown(seconds: int) -> str:
     if not seconds:
         return "不限時"
     return discord.utils.format_dt(discord.utils.utcnow() + timedelta(seconds=seconds), "R")
+
+
+def start_warnings(seconds: float | None, send):
+    """Post a reminder when 30 and when 10 seconds are left (config.WARN_SECONDS), so nobody depends on the
+    countdown clock of their own device. `send(left)` is an async function that posts it. Returns the task
+    (cancel it with stop_warnings when the wait ends early), or None when the time is too short or unlimited."""
+    marks = sorted((m for m in config.WARN_SECONDS if seconds and seconds > m), reverse=True)
+    if not marks:
+        return None
+
+    async def run() -> None:
+        waited = 0.0
+        for mark in marks:
+            await asyncio.sleep(seconds - mark - waited)
+            waited = seconds - mark
+            try:
+                await send(mark)
+            except (discord.HTTPException, AttributeError):
+                pass
+
+    return asyncio.create_task(run())
+
+
+def stop_warnings(task) -> None:
+    if task:
+        task.cancel()
 
 
 def ping(players) -> str:
@@ -696,15 +723,39 @@ async def auto_act(prompt: Prompt, actor: Player) -> None:
                 state.record("use_poison", actor.id, random.choice(options).id)
 
 
-async def wait_for_actors(prompt: Prompt, fakes: list, seconds: float) -> None:
-    """Wait until every real actor and every bot has acted, or the time is up."""
+async def wait_for_actors(prompt: Prompt, fakes: list, seconds: float, public: bool = False) -> None:
+    """Wait until every real actor and every bot has acted, or the time is up. 30 and 10 seconds before the end
+    the ones who have not acted yet are reminded: in the public channel for a public turn (votes, shots), in the
+    wolf channel for the wolves, otherwise in each one's own private channel (nothing public at night)."""
+    game = prompt.game
+
+    async def remind(left: int) -> None:
+        waiting = [a for a in prompt.actors if a.id in prompt.pending]
+        if not waiting or prompt.closed:
+            return
+        text = f"⏰ 剩 **{left} 秒**！還沒行動的請盡快按「行動」。"
+        if public:
+            await game.channel.send(f"{ping(waiting)} {text}")
+            await beep(game, game.voice_channel)  # the day: everybody is in the main voice channel
+        elif prompt.turn.key == "wolves" and game.wolf_voice:
+            await game.wolf_voice.send(f"{ping(waiting)} {text}")
+            await beep(game, game.wolf_voice)
+        else:
+            for actor in waiting:
+                channel = game.private_channels.get(actor.id) or game.channel
+                await channel.send(f"{actor.member.mention} {text}")
+            await beep(game, game.private_channels.get(waiting[0].id))  # at night: the channel of whoever is acting
+
     async def everyone():
         await asyncio.gather(prompt.event.wait(), *fakes)
 
+    warn = start_warnings(seconds, remind)
     try:
         await asyncio.wait_for(everyone(), timeout=seconds)
     except asyncio.TimeoutError:
         pass
+    finally:
+        stop_warnings(warn)
 
 
 # ---------------------------------------------------------------- the night
@@ -774,7 +825,7 @@ async def collect(game: Game, turn: N.Turn, state: N.NightState, opening: str, c
         msg = await say(game, opening)
     fakes = [asyncio.create_task(auto_act(prompt, a)) for a in prompt.actors if a.is_fake]
     try:
-        await wait_for_actors(prompt, fakes, turn.seconds)
+        await wait_for_actors(prompt, fakes, turn.seconds, public=True)
     finally:
         prompt.closed = True
         for task in fakes:

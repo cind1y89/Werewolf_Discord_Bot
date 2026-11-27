@@ -10,6 +10,10 @@ NIGHT_WOLF_SECONDS_CHOICES = (30, 45, 60, 90, 120, 180, 240)  # the wolves only
 SPEAK_SECONDS_CHOICES = (30, 45, 60, 90, 120, 180, 0)  # 0 = unlimited: the speaker ends with 跳過
 PANEL_TIMEOUT = 600        # how long a private panel stays clickable (a safety limit only)
 DAY_VOTE_SECONDS = 60
+SOUND_ENABLED = True       # play a soundboard sound with the 30 / 10 second reminders
+SOUND_NAME = "airhorn"     # Discord default soundboard sound (or a server sound with this name)
+SOUND_JOIN_WAIT = 1.0      # seconds to wait after the bot moves to a voice channel before the sound
+WARN_SECONDS = (30, 10)    # a reminder is posted when this many seconds are left (only if the time is longer)
 HUNTER_SHOT_SECONDS = 45
 
 DEAD_ROLE_DELAY = (6, 12)   # seconds to wait when a night role's player is dead (hides who is dead)
